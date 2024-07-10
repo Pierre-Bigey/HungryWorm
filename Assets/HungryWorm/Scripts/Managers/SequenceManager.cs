@@ -104,6 +104,77 @@ namespace HungryWorm
         // Define links between the states
         private void AddLinks()
         {
+            // Transition automatically to the StartScreen once the loading time completes
+            m_SplashScreenState.AddLink(new Link(m_StartScreenState));
+            
+            // EventLinks listen for the UI/game event messages to activate the transition to the next state
+
+            // This implementation uses a wrapper around the event to make easier to register/unregister the EventLinks
+            ActionWrapper mainMenuShownWrapper = new ActionWrapper
+            {
+                Subscribe = handler => UIEvents.MainMenuShown += handler,
+                Unsubscribe = handler => UIEvents.MainMenuShown -= handler
+            };
+
+            ActionWrapper settingsShownWrapper = new ActionWrapper
+            {
+                Subscribe = handler => UIEvents.SettingsShown += handler,
+                Unsubscribe = handler => UIEvents.SettingsShown -= handler
+            };
+
+            ActionWrapper screenClosedWrapper = new ActionWrapper
+            {
+                Subscribe = handler => UIEvents.ScreenClosed += handler,
+                Unsubscribe = handler => UIEvents.ScreenClosed -= handler
+            };
+
+            ActionWrapper gameStartedWrapper = new ActionWrapper
+            {
+                Subscribe = handler => GameEvents.GameStarted += handler,
+                Unsubscribe = handler => GameEvents.GameStarted -= handler
+            };
+  
+            ActionWrapper pauseScreenShownWrapper = new ActionWrapper
+            {
+                Subscribe = handler => UIEvents.PauseScreenShown += handler,
+                Unsubscribe = handler => UIEvents.PauseScreenShown -= handler
+            };
+  
+            ActionWrapper gameEndWrapper = new ActionWrapper
+            {
+                Subscribe = handler => GameEvents.GameEnded += handler,
+                Unsubscribe = handler => GameEvents.GameEnded -= handler
+            };
+
+            ActionWrapper leaderboardWrapper = new ActionWrapper
+            {
+                Subscribe = handler => UIEvents.LeaderboardScreenShown += handler,
+                Unsubscribe = handler => UIEvents.LeaderboardScreenShown -= handler
+            };
+            
+            // Once you have wrappers defined around the events, set up the EventLinks
+  
+            m_StartScreenState.AddLink(new EventLink(mainMenuShownWrapper, m_MainMenuState));
+
+            m_MainMenuState.AddLink(new EventLink(gameStartedWrapper, m_GamePlayState));
+            m_MainMenuState.AddLink(new EventLink(settingsShownWrapper, m_MenuSettingsState));
+
+            m_MenuSettingsState.AddLink(new EventLink(screenClosedWrapper, m_MainMenuState));
+
+            m_GamePlayState.AddLink(new EventLink(pauseScreenShownWrapper, m_PauseState));
+            m_PauseState.AddLink(new EventLink(settingsShownWrapper, m_GameSettingsState));
+            
+            m_GamePlayState.AddLink(new EventLink(gameEndWrapper, m_GameEndState));
+
+            m_GameEndState.AddLink(new EventLink(screenClosedWrapper, m_LeaderboardState));
+
+            m_GameSettingsState.AddLink(new EventLink(screenClosedWrapper, m_PauseState));
+
+            m_PauseState.AddLink(new EventLink(screenClosedWrapper, m_GamePlayState));
+            m_PauseState.AddLink(new EventLink(mainMenuShownWrapper, m_MainMenuState));
+
+            m_LeaderboardState.AddLink(new EventLink(gameStartedWrapper, m_GamePlayState));
+            m_LeaderboardState.AddLink(new EventLink(mainMenuShownWrapper, m_MainMenuState));
         }
 
 
