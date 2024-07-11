@@ -1,24 +1,41 @@
 ﻿using System;
-using UnityEngine.UIElements;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
 
 namespace HungryWorm
 {
     public class SettingsScreen : UIScreen
     {
-        Slider m_MasterVolumeSlider;
-        Slider m_SFXVolumeSlider;
-        Slider m_MusicVolumeSlider;
+        [Header("Audio Sliders")]
+        [Tooltip("Master volume slider")]
+        [SerializeField] private Slider m_MasterVolumeSlider;
+        [Tooltip("SFX volume slider")]
+        [SerializeField] private Slider m_SFXVolumeSlider;
+        [Tooltip("Music volume slider")]
+        [SerializeField] private Slider m_MusicVolumeSlider;
         
-        Label m_MasterVolumeLabel;
-        Label m_SFXVolumeLabel;
-        Label m_MusicVolumeLabel;
+        [Header("Audio Labels")]
+        [Tooltip("Master volume label")]
+        [SerializeField] private TMP_Text m_MasterVolumeLabel;
+        [Tooltip("SFX volume label")]
+        [SerializeField] private TMP_Text m_SFXVolumeLabel;
+        [Tooltip("Music volume label")]
+        [SerializeField] private TMP_Text m_MusicVolumeLabel;
 
-
-        private void OnEnable()
+        [Header("Joysticks toggles")]
+        [Tooltip("Fixed joystick toggle")]
+        [SerializeField] private Toggle m_FixedJoystickToggle;
+        [Tooltip("Floating joystick toggle")]
+        [SerializeField] private Toggle m_FloatingJoystickToggle;
+        [Tooltip("Dynamic joystick toggle")]
+        [SerializeField] private Toggle m_DynamicJoystickToggle;
+        
+        public override void Initialize()
         {
             SubscribeToEvents();
-            
-            m_IsTransparent = true;
+            //SettingsEvents.SettingInitialized?.Invoke();
         }
         
         private void OnDisable()
@@ -68,15 +85,22 @@ namespace HungryWorm
             m_MusicVolumeLabel.text = volume.ToString("F0");
         }
         
-        private void JoystickTypeButtonSetHandler(JoystickType obj)
+        private void JoystickTypeButtonSetHandler(JoystickType joystickType)
         {
-            throw new System.NotImplementedException();
+            m_FixedJoystickToggle.isOn = joystickType == JoystickType.FIXED;
+            m_DynamicJoystickToggle.isOn = joystickType == JoystickType.DYNAMIC;
+            m_FloatingJoystickToggle.isOn = joystickType == JoystickType.FLOATING;
         }
 
         public void BackButtonClicked()
         {
             SettingsEvents.SaveAll?.Invoke();
             UIEvents.ScreenClosed?.Invoke();
+        }
+        
+        public void ResetButtonClicked()
+        {
+            SettingsEvents.ResetAll?.Invoke();
         }
         
         public void MasterVolumeChangeHandler(float newValue)
@@ -97,9 +121,28 @@ namespace HungryWorm
             SettingsEvents.MusicSliderChanged?.Invoke(newValue);
         }
         
-        public void JoystickTypeChangeHandler(int joystickType)
+        public void FixedJoystickToggleHandler(bool isOn)
         {
-
+            if (isOn)
+            {
+                SettingsEvents.JoystickTypeButtonChanged(JoystickType.FIXED);
+            }
+        }
+        
+        public void FloatingJoystickToggleHandler(bool isOn)
+        {
+            if (isOn)
+            {
+                SettingsEvents.JoystickTypeButtonChanged(JoystickType.FLOATING);
+            }
+        }
+        
+        public void DynamicJoystickToggleHandler(bool isOn)
+        {
+            if (isOn)
+            {
+                SettingsEvents.JoystickTypeButtonChanged(JoystickType.DYNAMIC);
+            }
         }
     }
 }

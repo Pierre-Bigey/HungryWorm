@@ -17,7 +17,7 @@ namespace HungryWorm
         [SerializeField] GameObject[] m_PreloadedAssets;
         
         [Tooltip("Time in seconds to show Splash Screen")]
-        [SerializeField] float m_LoadScreenTime = 5f;
+        [SerializeField] float m_LoadScreenTime = 2f;
         
         [Tooltip("Debug state changes in the console")]
         [SerializeField] bool m_Debug;

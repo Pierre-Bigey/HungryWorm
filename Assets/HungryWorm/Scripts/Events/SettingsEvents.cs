@@ -31,5 +31,8 @@ namespace HungryWorm
         public static Action<JoystickType> ModelJoystickTypeChanged;
 
         public static Action SaveAll;
+        public static Action ResetAll;
+
+        public static Action SettingInitialized;
     }
 }

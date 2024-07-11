@@ -1,10 +1,16 @@
-﻿namespace HungryWorm
+﻿
+namespace HungryWorm
 {
     public class PlayerPrefManager
     {
         private static string _highScoreKey = "HighScore";
         private static string _soundVolumeKey = "SoundVolume";
         private static string _musicVolumeKey = "MusicVolume";
+        
+        private const float DefaultMasterVolume = 0.8f;
+        private const float DefaultSoundVolume = 0.7f;
+        private const float DefaultMusicVolume = 0.6f;
+        
         
         public void SetHighScore(int score)
         {
@@ -23,7 +29,7 @@
         
         public float GetMasterVolume()
         {
-            return UnityEngine.PlayerPrefs.GetFloat("MasterVolume", 1f);
+            return UnityEngine.PlayerPrefs.GetFloat("MasterVolume", DefaultMasterVolume);
         }
         
         public void SetSoundVolume(float volume)
@@ -33,7 +39,7 @@
         
         public float GetSoundVolume()
         {
-            return UnityEngine.PlayerPrefs.GetFloat(_soundVolumeKey, 1f);
+            return UnityEngine.PlayerPrefs.GetFloat(_soundVolumeKey, DefaultSoundVolume);
         }
         
         public void SetMusicVolume(float volume)
@@ -43,7 +49,7 @@
 
         public float GetMusicVolume()
         {
-            return UnityEngine.PlayerPrefs.GetFloat(_musicVolumeKey, 1f);
+            return UnityEngine.PlayerPrefs.GetFloat(_musicVolumeKey, DefaultMusicVolume);
         }
         
         public void SetJoystickType(JoystickType joystickType)
@@ -59,6 +65,9 @@
         public void ResetAll()
         {
             UnityEngine.PlayerPrefs.DeleteAll();
+            SetMasterVolume(DefaultMasterVolume);
+            SetSoundVolume(DefaultSoundVolume);
+            SetMusicVolume(DefaultMusicVolume);
             SaveAll();
         }
 

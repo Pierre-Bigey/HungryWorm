@@ -1,9 +1,9 @@
-﻿namespace HungryWorm.Scripts.Enums
+﻿namespace HungryWorm
 {
     public enum JoystickType
     {
         FIXED,
+        FLOATING,
         DYNAMIC,
-        FLOATING
     }
 }

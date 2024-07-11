@@ -9,20 +9,20 @@ namespace HungryWorm
         
         private void Start()
         {
+            _playerPrefManager = new PlayerPrefManager();
             Initialize();
         }
 
         // Set defaults
         private void Initialize()
         {
-            _playerPrefManager = new PlayerPrefManager();
 
             // Update sliders with the saved values from the PlayerPrefManager
             float masterVolume = _playerPrefManager.GetMasterVolume();
             float sfxVolume = _playerPrefManager.GetSoundVolume();
             float musicVolume = _playerPrefManager.GetMusicVolume();
             JoystickType joystickType = _playerPrefManager.GetJoystickType();
-
+                
             // Notify the View of saved values from the Storage
             SettingsEvents.MasterSliderSet?.Invoke(masterVolume * 100f);
             SettingsEvents.SFXSliderSet?.Invoke(sfxVolume * 100f);
@@ -38,6 +38,8 @@ namespace HungryWorm
         // Event subscriptions
         private void OnEnable()
         {
+            SettingsEvents.SettingInitialized += Initialize;
+            
             // Listen for events from the View/UI
             SettingsEvents.MasterSliderChanged += SettingsEvents_MasterSliderChanged;
             SettingsEvents.SFXSliderChanged += SettingsEvents_SFXSliderChanged;
@@ -51,11 +53,14 @@ namespace HungryWorm
             SettingsEvents.ModelJoystickTypeChanged += SettingsEvents_ModelJoystickTypeChanged;
 
             SettingsEvents.SaveAll += SettingsEvents_SaveAll;
+            SettingsEvents.ResetAll += SettingsEvents_ResetAll;
         }
         
         // Event unsubscriptions
         private void OnDisable()
         {
+            SettingsEvents.SettingInitialized -= Initialize;
+            
             SettingsEvents.MasterSliderChanged -= SettingsEvents_MasterSliderChanged;
             SettingsEvents.SFXSliderChanged -= SettingsEvents_SFXSliderChanged;
             SettingsEvents.MusicSliderChanged -= SettingsEvents_MusicSliderChanged;
@@ -67,6 +72,7 @@ namespace HungryWorm
             SettingsEvents.ModelJoystickTypeChanged -= SettingsEvents_ModelJoystickTypeChanged;
             
             SettingsEvents.SaveAll -= SettingsEvents_SaveAll;
+            SettingsEvents.ResetAll -= SettingsEvents_ResetAll;
         }
         
         private void SettingsEvents_MasterSliderChanged(float sliderValue)
@@ -92,7 +98,7 @@ namespace HungryWorm
         
         private void SettingsEvents_JoystickTypeButtonChanged(JoystickType joystickType)
         {
-            // TODO
+            SettingsEvents.JoystickTypeChanged?.Invoke(joystickType);
             _playerPrefManager.SetJoystickType(joystickType);
         }
         
@@ -125,6 +131,11 @@ namespace HungryWorm
             _playerPrefManager.SaveAll();
         }
 
+        private void SettingsEvents_ResetAll()
+        {
+            _playerPrefManager.ResetAll();
+            Initialize();
+        }
 
     }
 }

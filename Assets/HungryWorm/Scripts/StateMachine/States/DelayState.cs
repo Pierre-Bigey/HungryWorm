@@ -20,26 +20,30 @@ namespace HungryWorm
         readonly Action m_OnExit;
 
         /// <param name="delayInSeconds">delay in seconds</param>
+        /// <param name="onUpdate">Action to run every frame while waiting</param>
+        /// <param name="onExit">Action to run when execution completes</param>
+        /// <param name="stateName">Name of the state</param>
         public DelayState(float delayInSeconds, Action<float> onUpdate = null, Action onExit = null, string stateName = nameof(DelayState))
         {
             m_DelayInSeconds = delayInSeconds;
             m_ProgressUpdated = onUpdate;
             m_OnExit = onExit;
             Name = stateName;
+            
         }
 
         public override IEnumerator Execute()
         {
             var startTime = Time.time;
-
+            
             if (m_Debug)
                 base.LogCurrentState();
 
             while (Time.time - startTime < m_DelayInSeconds)
             {
-                yield return null;
                 float progressValue = (Time.time - startTime) / m_DelayInSeconds;
                 m_ProgressUpdated?.Invoke(progressValue*100);
+                yield return null;
             }
         }
 

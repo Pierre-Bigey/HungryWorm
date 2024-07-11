@@ -48,7 +48,18 @@ namespace HungryWorm
 
         private void SubscribeToEvents()
         {
-            
+            // Wait for the SplashScreen to finish loading then load the StartScreen
+            SceneEvents.PreloadCompleted += SceneEvents_PreloadCompleted;
+
+            // Pair GameEvents with methods to Show each screen
+            UIEvents.SplashScreenShown += UIEvents_SplashScreenShown;
+            UIEvents.MainMenuShown += UIEvents_MainMenuShown;
+            UIEvents.SettingsShown += UIEvents_SettingsShown;
+            UIEvents.GameScreenShown += UIEvents_GameScreenShown;
+            UIEvents.PauseScreenShown += UIEvents_PauseScreenShown;
+            UIEvents.EndScreenShown += UIEvents_EndScreenShown;
+            UIEvents.LeaderboardScreenShown += UIEvents_LeaderboardScreenShown;
+            UIEvents.ScreenClosed += UIEvents_ScreenClosed;
         }
         
         private void UnsubscribeFromEvents()
@@ -129,6 +140,7 @@ namespace HungryWorm
             NullRefChecker.Validate(this);
             
             RegisterScreens();
+            InitializeScreens();
             HideScreens();
         }
         
@@ -147,6 +159,15 @@ namespace HungryWorm
                 m_EndScreen,
                 m_LeaderboardScreen
             };
+        }
+        
+        // Initialize each UIScreen
+        private void InitializeScreens()
+        {
+            foreach (UIScreen screen in m_Screens)
+            {
+                screen.Initialize();
+            }
         }
         
         // Clear history and hide all Views

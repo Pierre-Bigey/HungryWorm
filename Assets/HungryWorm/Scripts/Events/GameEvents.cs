@@ -20,8 +20,8 @@ namespace HungryWorm
 
         // The worm is dead
         public static Action GameEnded;
-
         
         #endregion
+        
     }
 }
