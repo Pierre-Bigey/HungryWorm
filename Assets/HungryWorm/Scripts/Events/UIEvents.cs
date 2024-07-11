@@ -36,10 +36,15 @@ namespace HungryWorm
         #endregion
 
         
-        #region Health bar events:
+        #region GamePLay events:
 
-        // Draw the progress bar's percentage complete
+        // Draw the health bar
         public static Action<float> HealthBarUpdated;
+        
+        // Call the score
+        public static Action<float> ScoreUpdated;
+
+        public static Action<float> TimerUpdated;
         
         #endregion
         
