@@ -9,7 +9,7 @@ public class InputChecker : MonoBehaviour
     [SerializeField] public float m_HorizontalValue;
     [SerializeField] public float m_VerticalValue;
 
-    [SerializeField] private FloatingJoystick joystick;
+    [SerializeField] private VariableJoystick joystick;
     
     [SerializeField] private Rigidbody2D m_Rigidbody;
 

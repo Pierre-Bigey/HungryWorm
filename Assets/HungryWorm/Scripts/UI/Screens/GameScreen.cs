@@ -28,17 +28,19 @@ namespace HungryWorm
 
         private void SubscribeEvents()
         {
-            
+            SettingsEvents.JoystickTypeChanged += SettingsEvents_ModelJoystickTypeChanged;
             
         }
 
         private void UnsubscribeEvents()
         {
-            
+            SettingsEvents.JoystickTypeChanged -= SettingsEvents_ModelJoystickTypeChanged;
         }
 
-        private void ChangeJoystickType(JoystickType joystickType)
+        private void SettingsEvents_ModelJoystickTypeChanged(JoystickType joystickType)
         {
+            Debug.Log("GameScreen Joystick changed : " + joystickType);
+            
             switch (joystickType)
             {
                 case JoystickType.FIXED:

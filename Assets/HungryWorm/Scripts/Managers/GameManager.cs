@@ -8,14 +8,12 @@ namespace HungryWorm
     {
         private void OnEnable()
         {
-            SettingsEvents.JoystickTypeChanged += SettingsEvents_OnJoystickTypeChanged;
-
             Initialize();
         }
         
         private void OnDisable()
         {
-            SettingsEvents.JoystickTypeChanged -= SettingsEvents_OnJoystickTypeChanged;
+            
         }
         
         private void Initialize()
@@ -23,11 +21,6 @@ namespace HungryWorm
             NullRefChecker.Validate(this);
         }
         
-        
-        private void SettingsEvents_OnJoystickTypeChanged(JoystickType joystickType)
-        {
-            
-        }
         
     }
 }
