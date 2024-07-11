@@ -2,7 +2,7 @@
 
 namespace HungryWorm
 {
-    public class GameEvents
+    public static class GameEvents
     {
         #region Game state change events:
 
