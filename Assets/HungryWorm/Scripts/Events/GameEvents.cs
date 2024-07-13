@@ -28,13 +28,7 @@ namespace HungryWorm
         
         public static Action<float> TimeUpdated;
         
-        #region Gameplay events:
-        // The worm has eaten a piece of food
-        public static Action<float> FoodEaten;
         
-        public static Action<float> DamageTaken;
-        
-        #endregion
         
     }
 }

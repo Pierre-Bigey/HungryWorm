@@ -25,9 +25,9 @@ namespace HungryWorm
         public static Action<string> UnloadSceneByPath;
 
         // Additively load the scene with given index
-        public static Action<int> SceneIndexLoaded;
+        public static Action<int> LoadSceneByIndex;
 
         // Unload the previous scene
-        public static Action LastSceneUnloaded;
+        public static Action UnloadLastScene;
     }
 }

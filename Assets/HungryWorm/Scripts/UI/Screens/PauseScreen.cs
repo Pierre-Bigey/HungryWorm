@@ -10,6 +10,7 @@
         public void OnResumeButtonClicked()
         {
             UIEvents.ScreenClosed?.Invoke();
+            GameEvents.GameUnpaused?.Invoke();
         }
         
         public void OnOptionsButtonClicked()
@@ -20,6 +21,7 @@
         public void OnQuitButtonClicked()
         {
             UIEvents.MainMenuShown?.Invoke();
+            GameEvents.GameEnded?.Invoke();
         }
         
     }

@@ -45,7 +45,15 @@ namespace HungryWorm
         {
             UnsubscribeFromEvents();
         }
-
+        private void Initialize()
+            {
+                NullRefChecker.Validate(this);
+                
+                RegisterScreens();
+                InitializeScreens();
+                HideScreens();
+            }
+        
         private void SubscribeToEvents()
         {
             // Wait for the SplashScreen to finish loading then load the StartScreen
@@ -142,14 +150,7 @@ namespace HungryWorm
         
         #endregion
         
-        private void Initialize()
-        {
-            NullRefChecker.Validate(this);
-            
-            RegisterScreens();
-            InitializeScreens();
-            HideScreens();
-        }
+        
         
         // Store each UIScreen into a master list so we can hide all of them easily.
         private void RegisterScreens()

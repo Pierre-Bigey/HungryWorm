@@ -52,7 +52,6 @@ namespace HungryWorm
         {
             float decibelVolume = ConvertLinearToDecibel(volume);
             m_AudioMixer.SetFloat(k_MasterVolume, decibelVolume);
-            
         }
 
         private void SettingsEvents_OnMusicVolumeChanged(float volume)

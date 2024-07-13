@@ -301,7 +301,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -377,9 +377,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PreloadedAssets:
   - {fileID: 1723789687666904967, guid: 602cd73ca5c95a349a8b93775ea19b1f, type: 3}
-  - {fileID: 7125546974711845000, guid: d93a8a05f4db4824a8da52fdfaeadf7a, type: 3}
   - {fileID: 5041388506653055573, guid: 9105488f8dcf74b45a9410b6116e53d7, type: 3}
   - {fileID: 6054025656517837348, guid: f49700f3128bd894b8af365a24c27c1c, type: 3}
+  - {fileID: 1046270462574549136, guid: 5369c40f921d49b4fbef208b6cb70f42, type: 3}
+  - {fileID: 8897179358076623278, guid: 27188530da4880c4fabff146ca537a9e, type: 3}
   m_LoadScreenTime: 2
   m_Debug: 0
 --- !u!4 &1924811285

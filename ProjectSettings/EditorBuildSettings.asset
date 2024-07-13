@@ -5,12 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/HungryWorm/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/HungryWorm/Scenes/boot.unity
     guid: 3ec3cc8153d1d1e4c969edc46100fc49
+  - enabled: 1
+    path: Assets/HungryWorm/Scenes/gameScene.unity
+    guid: 023cb7f7e05134c41b1d09667ecab337
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

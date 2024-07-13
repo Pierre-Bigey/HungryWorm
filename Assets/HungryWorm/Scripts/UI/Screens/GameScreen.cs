@@ -18,6 +18,8 @@ namespace HungryWorm
         [SerializeField] private TMP_Text m_timerText;
         
         [SerializeField] private VariableJoystick m_variableJoystick;
+        
+        private TimeSpan timePlaying;
 
         /*private void Start()
         {
@@ -38,18 +40,21 @@ namespace HungryWorm
         {
             SettingsEvents.JoystickTypeChanged += SettingsEvents_ModelJoystickTypeChanged;
             
-            //m_inputSystemActions.UI.Cancel.performed += CancelAction;
+            GameEvents.TimeUpdated += GameEvents_TimeUpdated;
             
+        }
+        
+        private void UnsubscribeEvents()
+        {
+            SettingsEvents.JoystickTypeChanged -= SettingsEvents_ModelJoystickTypeChanged;
+            
+            GameEvents.TimeUpdated -= GameEvents_TimeUpdated;
         }
         
         public void OnPauseButtonPressed()
         {
             UIEvents.PauseScreenShown?.Invoke();
-        }
-
-        private void UnsubscribeEvents()
-        {
-            SettingsEvents.JoystickTypeChanged -= SettingsEvents_ModelJoystickTypeChanged;
+            GameEvents.GamePaused?.Invoke();
         }
 
         private void SettingsEvents_ModelJoystickTypeChanged(JoystickType joystickType)
@@ -68,6 +73,13 @@ namespace HungryWorm
                     m_variableJoystick.SetMode(global::JoystickType.Dynamic);
                     break;
             }
+        }
+        
+        private void GameEvents_TimeUpdated(float time)
+        {
+            timePlaying = TimeSpan.FromSeconds(time);
+            string timePlaying_Str = timePlaying.ToString("mm':'ss");
+            m_timerText.text = timePlaying_Str;
         }
         
         

@@ -6,9 +6,12 @@ namespace HungryWorm
 {
     public class GameManager : MonoBehaviour
     {
+        
         private void OnEnable()
         {
             Initialize();
+            UIEvents.GameScreenShown?.Invoke();
+            GameEvents.GameStarted?.Invoke();
         }
         
         private void OnDisable()
@@ -20,6 +23,7 @@ namespace HungryWorm
         {
             NullRefChecker.Validate(this);
         }
+        
         
         
     }

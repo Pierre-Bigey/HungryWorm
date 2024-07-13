@@ -17,7 +17,9 @@ MonoBehaviour:
   m_PlatformId: b9b35072a6f44c2e863f17467ea3dc13
   m_PlatformBuildProfile:
     rid: 7318428778570973207
-  m_Scenes: []
+  m_Scenes:
+  - m_enabled: 1
+    m_path: Assets/HungryWorm/Scenes/boot.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings: []
@@ -43,7 +45,7 @@ MonoBehaviour:
         m_ExportAsGoogleAndroidProject: 0
         m_DebugSymbolLevel: 1
         m_DebugSymbolFormat: 5
-        m_CurrentDeploymentTargetId: 3A101JEHN02123
+        m_CurrentDeploymentTargetId: __builtin__target_default
         m_BuildType: 2
         m_BuildAppBundle: 0
         m_IPAddressToConnect: 

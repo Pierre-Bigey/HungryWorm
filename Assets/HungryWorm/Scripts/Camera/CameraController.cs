@@ -1,10 +1,11 @@
 using System;
+using HungryWorm;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform m_TargetedObject;
-    [SerializeField] private float m_SmoothTime = 0.25f;
+    [SerializeField] private float m_SmoothTime = 0.1f;
     
     [Header("Margins")]
     [SerializeField] private float depth = -10;
@@ -25,6 +26,11 @@ public class CameraController : MonoBehaviour
         m_Camera = Camera.main;
     }
 
+    private void OnEnable()
+    {
+        NullRefChecker.Validate(this);
+    }
+
     private void LateUpdate()
     {
         SetTarget();
@@ -42,13 +48,6 @@ public class CameraController : MonoBehaviour
         Vector3 screenPos = m_Camera.WorldToScreenPoint(m_TargetedObject.position);
         Vector3 bottomLeft = m_Camera.ViewportToScreenPoint(new Vector3(m_HorizontalMargin,m_VerticalMargin,0));
         Vector3 topRight = m_Camera.ViewportToScreenPoint(new Vector3(1-m_HorizontalMargin, 1-m_VerticalMargin, 0));
-        
-        //debug draw line to show margins
-        Debug.DrawLine(m_Camera.ScreenToWorldPoint(new Vector3(bottomLeft.x, bottomLeft.y, depth)), m_Camera.ScreenToWorldPoint(new Vector3(topRight.x, bottomLeft.y, depth)), Color.red);
-        Debug.DrawLine(m_Camera.ScreenToWorldPoint(new Vector3(topRight.x, bottomLeft.y, depth)), m_Camera.ScreenToWorldPoint(new Vector3(topRight.x, topRight.y, depth)), Color.red);
-        Debug.DrawLine(m_Camera.ScreenToWorldPoint(new Vector3(topRight.x, topRight.y, depth)), m_Camera.ScreenToWorldPoint(new Vector3(bottomLeft.x, topRight.y, depth)), Color.red);
-        Debug.DrawLine(m_Camera.ScreenToWorldPoint(new Vector3(bottomLeft.x, topRight.y, depth)), m_Camera.ScreenToWorldPoint(new Vector3(bottomLeft.x, bottomLeft.y, depth)), Color.red);
-        
 
         if (screenPos.x < bottomLeft.x || screenPos.x > topRight.x)
         {
@@ -66,6 +65,7 @@ public class CameraController : MonoBehaviour
     
     void MoveCamera()
     {
+        //Debug.Log("Moving camera to " + target);
         m_Camera.transform.position = Vector3.SmoothDamp(m_Camera.transform.position, target, ref currentVelocity, m_SmoothTime);
     }
 }
