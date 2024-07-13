@@ -1,12 +1,15 @@
-﻿using TMPro;
+﻿
+using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace HungryWorm
 {
     public class GameScreen : UIScreen
     {
-        
+        //private InputSystem_Actions m_inputSystemActions;
         
         [SerializeField] private Slider m_healthBar;
         
@@ -15,6 +18,11 @@ namespace HungryWorm
         [SerializeField] private TMP_Text m_timerText;
         
         [SerializeField] private VariableJoystick m_variableJoystick;
+
+        /*private void Start()
+        {
+            m_inputSystemActions = new InputSystem_Actions();
+        }*/
 
         public override void Initialize()
         {
@@ -30,6 +38,13 @@ namespace HungryWorm
         {
             SettingsEvents.JoystickTypeChanged += SettingsEvents_ModelJoystickTypeChanged;
             
+            //m_inputSystemActions.UI.Cancel.performed += CancelAction;
+            
+        }
+        
+        public void OnPauseButtonPressed()
+        {
+            UIEvents.PauseScreenShown?.Invoke();
         }
 
         private void UnsubscribeEvents()

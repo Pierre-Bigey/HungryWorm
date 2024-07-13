@@ -57,6 +57,7 @@ namespace HungryWorm
             UIEvents.SettingsShown += UIEvents_SettingsShown;
             UIEvents.GameScreenShown += UIEvents_GameScreenShown;
             UIEvents.PauseScreenShown += UIEvents_PauseScreenShown;
+            UIEvents.GameSettingsScreenShown += UIEvents_GameSettingsScreenShown;
             UIEvents.EndScreenShown += UIEvents_EndScreenShown;
             UIEvents.LeaderboardScreenShown += UIEvents_LeaderboardScreenShown;
             UIEvents.ScreenClosed += UIEvents_ScreenClosed;
@@ -71,6 +72,7 @@ namespace HungryWorm
             UIEvents.SettingsShown -= UIEvents_SettingsShown;
             UIEvents.GameScreenShown -= UIEvents_GameScreenShown;
             UIEvents.PauseScreenShown -= UIEvents_PauseScreenShown;
+            UIEvents.GameSettingsScreenShown -= UIEvents_GameSettingsScreenShown;
             UIEvents.EndScreenShown -= UIEvents_EndScreenShown;
             UIEvents.LeaderboardScreenShown -= UIEvents_LeaderboardScreenShown;
             UIEvents.ScreenClosed -= UIEvents_ScreenClosed;
@@ -111,6 +113,11 @@ namespace HungryWorm
         private void UIEvents_PauseScreenShown()
         {
             Show(m_PauseScreen);
+        }
+        
+        private void UIEvents_GameSettingsScreenShown()
+        {
+            Show(m_GameSettingsScreen);
         }
 
         private void UIEvents_EndScreenShown()
