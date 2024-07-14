@@ -46,7 +46,7 @@ namespace HungryWorm
         
         // Call the score
         public static Action<float> ScoreUpdated;
-
+        
         public static Action<float> TimerUpdated;
         
         #endregion

@@ -18,5 +18,8 @@ namespace HungryWorm
 
         public static Action<Vector2> WormGoToDirection;
 
+        
+        public static Action WormDied;
+
     }
 }

@@ -21,17 +21,12 @@ namespace HungryWorm
         public void PlayButtonClicked()
         {
             //UIEvents.GameScreenShown?.Invoke();
-            LoadGameScene();
+            SceneEvents.StartGame?.Invoke();
         }
 
         public void QuitButtonClicked()
         {
             SceneEvents.ExitApplication?.Invoke();
-        }
-
-        private void LoadGameScene()
-        {
-            SceneEvents.LoadSceneByIndex?.Invoke(1);
         }
     }
 

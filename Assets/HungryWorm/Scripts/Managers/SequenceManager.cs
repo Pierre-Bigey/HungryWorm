@@ -58,12 +58,14 @@ namespace HungryWorm
         private void OnEnable()
         {
             SceneEvents.ExitApplication += SceneEvents_ExitApplication;
+            SceneEvents.StartGame += SceneEvents_StartGame;
         }
 
         // Unsubscribe from event channels to prevent errors
         private void OnDisable()
         {
             SceneEvents.ExitApplication -= SceneEvents_ExitApplication;
+            SceneEvents.StartGame -= SceneEvents_StartGame;
         }
         
         #endregion
@@ -190,7 +192,12 @@ namespace HungryWorm
         }
         
         #endregion
-        
+
+        private void SceneEvents_StartGame()
+        {
+            SceneEvents.UnloadLastScene?.Invoke();
+            SceneEvents.LoadSceneByIndex?.Invoke(1);
+        }
         
         // Event-handling methods
         private void SceneEvents_ExitApplication()

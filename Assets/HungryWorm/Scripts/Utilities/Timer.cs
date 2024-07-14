@@ -6,7 +6,6 @@ namespace HungryWorm
 {
     public class Timer
     {
-        private float sectionCurrentTime;
         
         private bool isTimerGoing;
  
@@ -20,8 +19,6 @@ namespace HungryWorm
             if (coUpdateTimer != null) {
                 Coroutines.StopCoroutine(coUpdateTimer);
             }
- 
-            sectionCurrentTime = 0f;
             isTimerGoing = true;
             coUpdateTimer = Coroutines.StartCoroutine(UpdateTimer());
         }
@@ -38,8 +35,7 @@ namespace HungryWorm
         {
             while (isTimerGoing)
             {
-                sectionCurrentTime += Time.deltaTime;
-                GameEvents.TimeUpdated.Invoke(sectionCurrentTime);
+                GameEvents.TimeUpdated.Invoke(Time.deltaTime);
                 
                 yield return null;
             }

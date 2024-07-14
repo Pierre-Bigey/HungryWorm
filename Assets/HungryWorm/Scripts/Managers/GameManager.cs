@@ -10,21 +10,37 @@ namespace HungryWorm
         private void OnEnable()
         {
             Initialize();
-            UIEvents.GameScreenShown?.Invoke();
-            GameEvents.GameStarted?.Invoke();
+            SubscribeEvents();
         }
         
         private void OnDisable()
         {
-            
+            UnsubscribeEvents();
         }
         
         private void Initialize()
         {
             NullRefChecker.Validate(this);
+            
+            UIEvents.GameScreenShown?.Invoke();
+            GameEvents.GameStarted?.Invoke();
         }
         
+        private void SubscribeEvents()
+        {
+            WormEvents.WormDied += WormEvents_OnWormDied;
+        }
         
-        
+        private void UnsubscribeEvents()
+        {
+            WormEvents.WormDied -= WormEvents_OnWormDied;
+        }
+
+        private void WormEvents_OnWormDied()
+        {
+            GameEvents.GameEnded?.Invoke();
+            UIEvents.EndScreenShown?.Invoke();
+        }
+
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8018636947236035459}
   - component: {fileID: 5349670487650309250}
   - component: {fileID: 2954626376834316329}
+  - component: {fileID: 8662875392167588899}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -166,6 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a080a27c5f9d58f47b5d517681444228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_maxHealth: 100
+  m_healthLooseRate: 3
   m_airLinearDrag: 0.1
   m_airAngularDrag: 0.1
   m_airGravityScale: 0.9
@@ -174,3 +177,20 @@ MonoBehaviour:
   m_dirtAngularDrag: 2
   m_dirtGravityScale: 0
   m_dirtSpeed: 40
+--- !u!114 &8662875392167588899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6470379281257581549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439285d3fade8a346840eb23ff5b7684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TargetedObject: {fileID: 1826817587139174410}
+  m_SmoothTime: 0.1
+  depth: -10
+  m_HorizontalMargin: 0.4
+  m_VerticalMargin: 0.4

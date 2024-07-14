@@ -1,6 +1,7 @@
 using System;
 using HungryWorm;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -12,6 +13,11 @@ public class PlayerController : MonoBehaviour
     public bool InDirt => m_isInDirt;
     
     private Rigidbody2D m_rigidbody2D;
+
+    [FormerlySerializedAs("m_baseHealth")]
+    [Header("Worm Health")] 
+    [SerializeField] private float m_maxHealth = 50f;
+    [SerializeField] private float m_healthLooseRate = 3f;
     
     
     //Values in the air
@@ -31,12 +37,19 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        
+        InitializeValues();
+
+    }
+
+    private void InitializeValues()
+    {
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         
-        m_isInDirt = false;
-        SetWormMovementValues(false);
-        
-        m_health = 100;
+         m_isInDirt = false;
+         SetWormMovementValues(false);
+                
+         m_health = m_maxHealth;
     }
     
     private void OnEnable()
@@ -55,6 +68,8 @@ public class PlayerController : MonoBehaviour
         WormEvents.EnemyEaten += GameEvents_EnemyEaten;
         
         WormEvents.WormGoToDirection += MoveTo;
+        
+        GameEvents.TimeUpdated += GameEvents_TimeUpdated;
     }
     
     private void UnsubscribeEvents()
@@ -63,6 +78,8 @@ public class PlayerController : MonoBehaviour
         WormEvents.EnemyEaten -= GameEvents_EnemyEaten;
         
         WormEvents.WormGoToDirection -= MoveTo;
+        
+        GameEvents.TimeUpdated -= GameEvents_TimeUpdated;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -122,6 +139,32 @@ public class PlayerController : MonoBehaviour
             
             m_speed = m_dirtSpeed;
         }
+    }
+    
+    private void GameEvents_TimeUpdated(float deltaTime)
+    {
+        UpdateHealth(-m_healthLooseRate * deltaTime);
+    }
+
+    private void UpdateHealth(float amount)
+    {
+        m_health += amount;
+        m_health = Mathf.Clamp(m_health, 0, m_maxHealth);
+
+        UIEvents.HealthBarUpdated?.Invoke(m_health / m_maxHealth);
+
+        if (m_health <= 0)
+        {
+            Die();
+        }
+    
+    }
+
+    private void Die()
+    {
+        //TODO make an animation or something
+        Debug.Log("Player died");
+        WormEvents.WormDied?.Invoke();
     }
 
     

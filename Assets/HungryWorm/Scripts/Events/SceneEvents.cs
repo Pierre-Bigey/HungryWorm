@@ -29,5 +29,7 @@ namespace HungryWorm
 
         // Unload the previous scene
         public static Action UnloadLastScene;
+
+        public static Action StartGame;
     }
 }

@@ -40,7 +40,9 @@ namespace HungryWorm
         {
             SettingsEvents.JoystickTypeChanged += SettingsEvents_ModelJoystickTypeChanged;
             
-            GameEvents.TimeUpdated += GameEvents_TimeUpdated;
+            UIEvents.TimerUpdated += UIEvents_TimerUpdated;
+            
+            UIEvents.HealthBarUpdated += UIEvents_HealthBarUpdated;
             
         }
         
@@ -48,7 +50,9 @@ namespace HungryWorm
         {
             SettingsEvents.JoystickTypeChanged -= SettingsEvents_ModelJoystickTypeChanged;
             
-            GameEvents.TimeUpdated -= GameEvents_TimeUpdated;
+            UIEvents.TimerUpdated -= UIEvents_TimerUpdated;
+            
+            UIEvents.HealthBarUpdated -= UIEvents_HealthBarUpdated;
         }
         
         public void OnPauseButtonPressed()
@@ -75,13 +79,17 @@ namespace HungryWorm
             }
         }
         
-        private void GameEvents_TimeUpdated(float time)
+        private void UIEvents_TimerUpdated(float time)
         {
             timePlaying = TimeSpan.FromSeconds(time);
             string timePlaying_Str = timePlaying.ToString("mm':'ss");
             m_timerText.text = timePlaying_Str;
         }
         
+        private void UIEvents_HealthBarUpdated(float value)
+        {
+            m_healthBar.value = value;
+        }
         
     }
 }
