@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class PlayerController : MonoBehaviour
 {
     private float m_health;
-    private bool m_isInDirt;
+    [SerializeField] private bool m_isInDirt;
     
     public float Health => m_health;
     public bool InDirt => m_isInDirt;
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_airAngularDrag = 0.1f;
     [SerializeField] private float m_airGravityScale = 0.9f;
     [SerializeField] private float m_airSpeed = 5f;
+    [SerializeField] private float m_airHorizontalMultiplier = 2f;
     
     [Header("Dirt rigidbody values")]
     [SerializeField] private float m_dirtLinearDrag = 1.5f;
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         
          m_isInDirt = false;
-         SetWormMovementValues(false);
+         SetWormMovementValues();
                 
          m_health = m_maxHealth;
     }
@@ -105,25 +106,30 @@ public class PlayerController : MonoBehaviour
     private void OnDirtEnter()
     {
         m_isInDirt = true;
-        SetWormMovementValues(true);
+        SetWormMovementValues();
     }
     
     private void OnDirtExit()
     {
         m_isInDirt = false;
-        SetWormMovementValues(false);
+        SetWormMovementValues();
 
     }
     
     private void MoveTo(Vector2 direction)
     {
         Vector2 force = direction * (m_speed * Time.deltaTime);
+        if (!m_isInDirt)
+        {
+            force.x *= m_airHorizontalMultiplier;
+        }
+        
         m_rigidbody2D.AddForce(force, ForceMode2D.Impulse);
     }
     
-    private void SetWormMovementValues(bool isInDirt)
+    private void SetWormMovementValues()
     {
-        if (!isInDirt)
+        if (!m_isInDirt)
         {
             m_rigidbody2D.drag = m_airLinearDrag;
             m_rigidbody2D.angularDrag = m_airAngularDrag;
