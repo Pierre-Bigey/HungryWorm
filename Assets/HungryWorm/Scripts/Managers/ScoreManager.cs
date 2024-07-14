@@ -38,7 +38,6 @@ namespace HungryWorm
 
         private void GameEvents_OnScoreUpdated(float _score)
         {
-            Debug.Log("Score updated: " + m_score);
             m_score += _score;
             UIEvents.ScoreUpdated?.Invoke(m_score);
         }

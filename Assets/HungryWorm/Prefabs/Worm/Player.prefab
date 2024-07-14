@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5349670487650309250}
   - component: {fileID: 2954626376834316329}
   - component: {fileID: 8662875392167588899}
+  - component: {fileID: 4161904046868420960}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -167,7 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a080a27c5f9d58f47b5d517681444228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isInDirt: 0
   m_maxHealth: 100
   m_healthLooseRate: 3
   m_airLinearDrag: 0.1
@@ -196,3 +196,18 @@ MonoBehaviour:
   depth: -10
   m_HorizontalMargin: 0.4
   m_VerticalMargin: 0.4
+--- !u!114 &4161904046868420960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6470379281257581549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7e8b759bdc489582bc733a703b7b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_trailPrefab: {fileID: 4118058984764664731, guid: 7491df7bd430531458602b9d207715bc, type: 3}
+  m_trailSeparation: 0.5
+  m_ZPosition: 55

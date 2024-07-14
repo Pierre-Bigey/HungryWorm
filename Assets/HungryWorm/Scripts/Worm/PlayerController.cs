@@ -7,13 +7,13 @@ using UnityEngine.Serialization;
 public class PlayerController : MonoBehaviour
 {
     private float m_health;
-    [SerializeField] private bool m_isInDirt;
+    private bool m_isInDirt;
     
     public float Health => m_health;
     public bool InDirt => m_isInDirt;
     
     private Rigidbody2D m_rigidbody2D;
-
+    
     [FormerlySerializedAs("m_baseHealth")]
     [Header("Worm Health")] 
     [SerializeField] private float m_maxHealth = 50f;
@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
          SetWormMovementValues();
                 
          m_health = m_maxHealth;
+         
+        
     }
     
     private void OnEnable()

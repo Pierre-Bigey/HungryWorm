@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace HungryWorm
@@ -197,6 +198,7 @@ namespace HungryWorm
         {
             SceneEvents.UnloadLastScene?.Invoke();
             SceneEvents.LoadSceneByIndex?.Invoke(1);
+            
         }
         
         // Event-handling methods
