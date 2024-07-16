@@ -12,6 +12,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float m_HorizontalMargin = 0.1f;
     [SerializeField] private float m_VerticalMargin = 0.1f;
     
+    [Header("World Slices settings")]
+    [SerializeField] private float m_bufferSize = 5f;
+    
+    
+    private float cameraSemiWidth;
     
     private Vector3 currentVelocity;
     
@@ -20,21 +25,53 @@ public class CameraController : MonoBehaviour
     
     private Vector3 target;
     private Vector3 targetedObjectLastPosition;
+    
+    public float leftEnd;
+    public float rightEnd;
+
+    public float leftEdge;
+    public float rightEdge;
 
     private void Start()
     {
         m_Camera = Camera.main;
+        Vector3 leftEdgeVector = m_Camera.ViewportToWorldPoint(new Vector3(0, 0.5f, m_Camera.nearClipPlane));
+        cameraSemiWidth = m_Camera.transform.position.x - leftEdgeVector.x;
     }
 
     private void OnEnable()
     {
         NullRefChecker.Validate(this);
+        WorldEvents.LeftEdgeUpdated += WorldEvents_LeftEdgeUpdated;
+        WorldEvents.RightEdgeUpdated += WorldEvents_RightEdgeUpdated;
+    }
+    
+    private void OnDisable()
+    {
+        WorldEvents.LeftEdgeUpdated -= WorldEvents_LeftEdgeUpdated;
+        WorldEvents.RightEdgeUpdated -= WorldEvents_RightEdgeUpdated;
     }
 
     private void LateUpdate()
     {
         SetTarget();
         MoveCamera();
+        CheckEdges();
+    }
+
+    private void CheckEdges()
+    {
+        leftEdge = Camera.main.transform.position.x - cameraSemiWidth;
+        rightEdge = Camera.main.transform.position.x + cameraSemiWidth;
+
+        if (leftEdge < leftEnd + m_bufferSize)
+        {
+            WorldEvents.MoveSlice?.Invoke(Direction.Left);
+        }
+        else if (rightEdge > rightEnd - m_bufferSize)
+        {
+            WorldEvents.MoveSlice?.Invoke(Direction.Right);
+        }
     }
     
     private void SetTarget()
@@ -61,6 +98,16 @@ public class CameraController : MonoBehaviour
 
         target.z = depth;
         targetedObjectLastPosition = m_TargetedObject.position;
+    }
+
+    private void WorldEvents_LeftEdgeUpdated(float leftEnd)
+    {
+        this.leftEnd = leftEnd;
+    }
+    
+    private void WorldEvents_RightEdgeUpdated(float rightEnd)
+    {
+        this.rightEnd = rightEnd;
     }
     
     void MoveCamera()

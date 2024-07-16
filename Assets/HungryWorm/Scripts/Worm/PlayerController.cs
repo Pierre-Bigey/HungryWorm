@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     private float m_speed;
 
+    private bool m_supperposedDirt;
+
     private void Start()
     {
         
@@ -51,8 +53,8 @@ public class PlayerController : MonoBehaviour
          SetWormMovementValues();
                 
          m_health = m_maxHealth;
-         
-        
+
+         m_supperposedDirt = false;
     }
     
     private void OnEnable()
@@ -90,6 +92,11 @@ public class PlayerController : MonoBehaviour
         //Check if the player collided with the dirt (with layer name "Dirt")
         if (other.gameObject.layer == LayerMask.NameToLayer("Dirt"))
         {
+            if(m_isInDirt)
+            {
+                m_supperposedDirt = true;
+                return;
+            }
             WormEvents.DirtEnter?.Invoke();
             OnDirtEnter();
         }
@@ -100,6 +107,11 @@ public class PlayerController : MonoBehaviour
         //Check if the player exited the dirt (with layer name "Dirt")
         if (other.gameObject.layer == LayerMask.NameToLayer("Dirt"))
         {
+            if (m_supperposedDirt)
+            {
+                m_supperposedDirt = false;
+                return;
+            }
             WormEvents.DirtExit?.Invoke();
             OnDirtExit();
         }
@@ -171,7 +183,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         //TODO make an animation or something
-        Debug.Log("Player died");
+        // Debug.Log("Player died");
         WormEvents.WormDied?.Invoke();
     }
 

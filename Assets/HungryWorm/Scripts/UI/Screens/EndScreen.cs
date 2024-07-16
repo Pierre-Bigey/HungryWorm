@@ -6,6 +6,7 @@
         public void OnNextClicked()
         {
             UIEvents.LeaderboardScreenShown?.Invoke();
+            GameEvents.GameClosed?.Invoke();
         }
         
     }

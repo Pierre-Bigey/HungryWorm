@@ -63,7 +63,7 @@ namespace HungryWorm
 
         private void SettingsEvents_ModelJoystickTypeChanged(JoystickType joystickType)
         {
-            Debug.Log("GameScreen Joystick changed : " + joystickType);
+            // Debug.Log("GameScreen Joystick changed : " + joystickType);
             
             switch (joystickType)
             {

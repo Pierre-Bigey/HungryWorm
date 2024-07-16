@@ -158,7 +158,7 @@ namespace HungryWorm
         private IEnumerator LoadAdditiveScene(int buildIndex)
         {
             string scenePath = SceneUtility.GetScenePathByBuildIndex(buildIndex);
-            Debug.Log("Loading scene index: " + buildIndex + " path: " + scenePath);
+            // Debug.Log("Loading scene index: " + buildIndex + " path: " + scenePath);
             yield return LoadAdditiveScene(scenePath);
         }
 
