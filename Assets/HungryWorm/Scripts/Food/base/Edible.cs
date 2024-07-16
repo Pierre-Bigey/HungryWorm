@@ -17,7 +17,7 @@ namespace HungryWorm.Scripts.Food
         /// <param name="other"></param>
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("Edible triggered with " + other.gameObject.name);
+            // Debug.Log("Edible triggered with " + other.gameObject.name);
             //Check the layer
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
@@ -37,7 +37,7 @@ namespace HungryWorm.Scripts.Food
         /// </summary>
         private void Kill()
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
