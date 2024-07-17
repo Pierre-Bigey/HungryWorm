@@ -4,5 +4,6 @@
     {
         ROCK,
         HUMAN,
+        CLOUD,
     }
 }

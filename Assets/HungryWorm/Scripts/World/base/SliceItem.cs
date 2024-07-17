@@ -19,7 +19,7 @@ namespace HungryWorm
 
         public bool m_randomRotation;
         
-        public void Init()
+        public virtual void Init()
         {
             PlaceItem();
         }
