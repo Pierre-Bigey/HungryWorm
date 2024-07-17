@@ -186,8 +186,6 @@ public class PlayerController : MonoBehaviour
         // Debug.Log("Player died");
         WormEvents.WormDied?.Invoke();
     }
-
-    
     
     private void GameEvents_EnemyEaten(float amount)
     {

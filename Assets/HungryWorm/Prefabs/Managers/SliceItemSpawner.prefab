@@ -57,6 +57,10 @@ MonoBehaviour:
   m_InitialCloudPoolSize: 25
   m_minCloudAmount: 3
   m_maxCloudAmount: 6
+  m_MinePrefab: {fileID: 1631743636765046021, guid: bc618a649934a0e47b67bd9c859a6e63, type: 3}
+  m_InitialMinePoolSize: 15
+  m_minMineAmount: 1
+  m_maxMineAmount: 3
 --- !u!114 &1805949952497400560
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,6 +30,12 @@ namespace HungryWorm
         [SerializeField] private int m_minCloudAmount = 1;
         [SerializeField] private int m_maxCloudAmount = 3;
         
+        [Header("Mine")]
+        [SerializeField] private GameObject m_MinePrefab;
+        [SerializeField] private int m_InitialMinePoolSize = 15;
+        [SerializeField] private int m_minMineAmount = 1;
+        [SerializeField] private int m_maxMineAmount = 3;
+        
         private Dictionary<SliceItemType, SliceItemPool> SliceItemPoolDict;
         private Dictionary<float, List<GameObject>> ItemPerSliceDict;    
         
@@ -81,6 +87,12 @@ namespace HungryWorm
                         sliceItemPool.initialPoolSize = m_InitialCloudPoolSize;
                         sliceItemPool.minAmountToSpawn = m_minCloudAmount;
                         sliceItemPool.maxAmountToSpawn = m_maxCloudAmount;
+                        break;
+                    case SliceItemType.MINE:
+                        sliceItemPool.prefab = m_MinePrefab;
+                        sliceItemPool.initialPoolSize = m_InitialMinePoolSize;
+                        sliceItemPool.minAmountToSpawn = m_minMineAmount;
+                        sliceItemPool.maxAmountToSpawn = m_maxMineAmount;
                         break;
                 }
                 

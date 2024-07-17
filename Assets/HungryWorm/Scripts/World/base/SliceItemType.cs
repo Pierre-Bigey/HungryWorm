@@ -5,5 +5,6 @@
         ROCK,
         HUMAN,
         CLOUD,
+        MINE
     }
 }

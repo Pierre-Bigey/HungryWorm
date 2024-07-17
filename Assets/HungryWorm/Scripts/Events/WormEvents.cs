@@ -17,9 +17,11 @@ namespace HungryWorm
         public static Action<float> DamageTaken;
 
         public static Action<Vector2> WormGoToDirection;
-
         
         public static Action WormDied;
+        
+        
+        public static Action<Vector3> MineExploded;
 
     }
 }
