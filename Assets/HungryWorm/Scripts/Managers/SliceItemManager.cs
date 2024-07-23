@@ -145,7 +145,7 @@ namespace HungryWorm
         
         public void RemoveItemsFromSlice(float x_pos)
         {
-            Debug.Log("Destroying items for slice at " + x_pos);
+            // Debug.Log("Destroying items for slice at " + x_pos);
             //Return the items to the unused pool
             if (ItemPerSliceDict.ContainsKey(x_pos))
             {

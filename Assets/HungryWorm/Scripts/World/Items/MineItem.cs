@@ -22,14 +22,19 @@ namespace HungryWorm.Items
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("Mine triggered with " + other.gameObject.name);
+            //Debug.Log("Mine triggered with " + other.gameObject.name);
             //Check the layer
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                WormEvents.MineExploded?.Invoke(transform.position);
-                WormEvents.DamageTaken?.Invoke(m_MineDamage);
-                gameObject.SetActive(false);
+                Explose();
             }
+        }
+
+        private void Explose()
+        {
+            WormEvents.MineExploded?.Invoke(transform.position);
+            WormEvents.DamageTaken?.Invoke(m_MineDamage);
+            gameObject.SetActive(false);
         }
     }
 }

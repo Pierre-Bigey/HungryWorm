@@ -15,35 +15,56 @@ namespace HungryWorm
         const string k_MusicVolume = "MusicVolume";
         const string k_MasterVolume = "MasterVolume";
         
+        [Header("Audio Sources")]
         [Tooltip("AudioSource dedicated to playing sound effects")]
         [SerializeField] AudioSource m_SFXAudioSource;
 
         [Tooltip("AudioSource dedicated to playing music")]
         [SerializeField] [Optional] AudioSource m_MusicAudioSource;
         
+        [Header("Audio Clips")]
+        [SerializeField] private AudioClip m_buttonClickClip;
+        [SerializeField] private AudioClip m_explosionClip;
         
         
         
         private void OnEnable()
         {
-            SettingsEvents.MasterVolumeChanged += SettingsEvents_OnMasterVolumeChanged;
-            SettingsEvents.SFXVolumeChanged += SettingsEvents_OnSFXVolumeChanged;
-            SettingsEvents.MusicVolumeChanged += SettingsEvents_OnMusicVolumeChanged;
-
             Initialize();
+            SubscribeEvents();
         }
         
         // Event unsubscriptions
         private void OnDisable()
         {
-            SettingsEvents.MasterVolumeChanged -= SettingsEvents_OnMasterVolumeChanged;
-            SettingsEvents.SFXVolumeChanged -= SettingsEvents_OnSFXVolumeChanged;
-            SettingsEvents.MusicVolumeChanged -= SettingsEvents_OnMusicVolumeChanged;
+            UnsubscribeEvents();
         }
 
         private void Initialize()
         {
             NullRefChecker.Validate(this);
+        }
+        
+        private void SubscribeEvents()
+        {
+            SettingsEvents.MasterVolumeChanged += SettingsEvents_OnMasterVolumeChanged;
+            SettingsEvents.SFXVolumeChanged += SettingsEvents_OnSFXVolumeChanged;
+            SettingsEvents.MusicVolumeChanged += SettingsEvents_OnMusicVolumeChanged;
+            
+            UIEvents.ButtonClicked += PlayButtonSound;
+            
+            WormEvents.MineExploded += WormEvents_MineExploded;
+        }
+        
+        private void UnsubscribeEvents()
+        {
+            SettingsEvents.MasterVolumeChanged -= SettingsEvents_OnMasterVolumeChanged;
+            SettingsEvents.SFXVolumeChanged -= SettingsEvents_OnSFXVolumeChanged;
+            SettingsEvents.MusicVolumeChanged -= SettingsEvents_OnMusicVolumeChanged;
+            
+            UIEvents.ButtonClicked -= PlayButtonSound;
+            
+            WormEvents.MineExploded -= WormEvents_MineExploded;
         }
         
         #region Event-handling methods (responds to volume change events, raised by the SettingsPresenter)
@@ -67,6 +88,16 @@ namespace HungryWorm
         }
         
         #endregion
+
+        private void PlayButtonSound()
+        {
+            m_SFXAudioSource.PlayOneShot(m_buttonClickClip);
+        }
+        
+        private void WormEvents_MineExploded(Vector3 position)
+        {
+            PlaySFXAtPoint(m_explosionClip, position);
+        }
         
         #region Methods
 

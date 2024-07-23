@@ -45,7 +45,7 @@ namespace HungryWorm
 
         public void DisableSlice()
         {
-            Debug.Log("Disabling " + gameObject.name);
+            // Debug.Log("Disabling " + gameObject.name);
             SliceItemManager.Instance.RemoveItemsFromSlice(m_XPos);
         }
     }

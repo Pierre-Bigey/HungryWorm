@@ -37,6 +37,8 @@ namespace HungryWorm
         public static Action LeaderboardScreenShown;
 
         #endregion
+        
+        public static Action ButtonClicked;
 
         
         #region GamePLay events:
