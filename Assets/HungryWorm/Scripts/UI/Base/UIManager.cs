@@ -65,7 +65,6 @@ namespace HungryWorm
             UIEvents.SettingsShown += UIEvents_SettingsShown;
             UIEvents.GameScreenShown += UIEvents_GameScreenShown;
             UIEvents.PauseScreenShown += UIEvents_PauseScreenShown;
-            UIEvents.GameSettingsScreenShown += UIEvents_GameSettingsScreenShown;
             UIEvents.EndScreenShown += UIEvents_EndScreenShown;
             UIEvents.LeaderboardScreenShown += UIEvents_LeaderboardScreenShown;
             UIEvents.ScreenClosed += UIEvents_ScreenClosed;
@@ -80,7 +79,6 @@ namespace HungryWorm
             UIEvents.SettingsShown -= UIEvents_SettingsShown;
             UIEvents.GameScreenShown -= UIEvents_GameScreenShown;
             UIEvents.PauseScreenShown -= UIEvents_PauseScreenShown;
-            UIEvents.GameSettingsScreenShown -= UIEvents_GameSettingsScreenShown;
             UIEvents.EndScreenShown -= UIEvents_EndScreenShown;
             UIEvents.LeaderboardScreenShown -= UIEvents_LeaderboardScreenShown;
             UIEvents.ScreenClosed -= UIEvents_ScreenClosed;
@@ -125,7 +123,7 @@ namespace HungryWorm
         
         private void UIEvents_GameSettingsScreenShown()
         {
-            Show(m_GameSettingsScreen);
+            Show(m_SettingsScreen);
         }
 
         private void UIEvents_EndScreenShown()
@@ -141,6 +139,7 @@ namespace HungryWorm
         // Remove the top UI screen from the stack and make that active (i.e., go back one screen)
         public void UIEvents_ScreenClosed()
         {
+            Debug.Log("UIEvents_ScreenClosed");
             if (m_History.Count != 0)
             {
                 Show(m_History.Pop(), false);
@@ -191,12 +190,14 @@ namespace HungryWorm
         
         public void Show(UIScreen screen, bool keepInHistory = true)
         {
+            Debug.Log("Show UIScreen: " + screen + " keepInHistory: " + keepInHistory);
             if (screen == null)
                 return;
 
             if (m_CurrentScreen != null)
             {
                 if (!screen.IsTransparent)
+                    Debug.Log("Hide UIScreen: " + m_CurrentScreen);
                     m_CurrentScreen.Hide();
 
                 if (keepInHistory)

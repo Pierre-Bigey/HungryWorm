@@ -15,7 +15,7 @@ namespace HungryWorm.Scripts.Animation
         {
             _animator = GetComponent<Animator>();
             AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            Debug.Log("Animator state info length: " + stateInfo.length + " speed: " + stateInfo.speed);
+            // Debug.Log("Animator state info length: " + stateInfo.length + " speed: " + stateInfo.speed);
             lifetime = stateInfo.length * stateInfo.speed;
         }
 

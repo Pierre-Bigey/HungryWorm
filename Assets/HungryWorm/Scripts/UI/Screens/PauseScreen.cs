@@ -15,7 +15,7 @@
         
         public void OnOptionsButtonClicked()
         {
-            UIEvents.GameSettingsScreenShown?.Invoke();
+            UIEvents.SettingsShown?.Invoke();
         }
         
         public void OnQuitButtonClicked()

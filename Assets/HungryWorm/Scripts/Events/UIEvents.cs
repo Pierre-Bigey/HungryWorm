@@ -26,9 +26,6 @@ namespace HungryWorm
 
         // Show a pause screen during gameplay to abort the game
         public static Action PauseScreenShown;
-        
-        //Show the gameSettings screen
-        public static Action GameSettingsScreenShown;
 
         // Show the results of the game
         public static Action EndScreenShown;
