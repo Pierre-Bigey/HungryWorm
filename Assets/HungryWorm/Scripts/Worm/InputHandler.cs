@@ -6,7 +6,7 @@ namespace  HungryWorm
 {
     public class InputHandler : MonoBehaviour
     {
-        [SerializeField] private VariableJoystick joystick;
+        [SerializeField] private VariableJoystick m_variableJoystick;
         
         private bool _canMove = true;
         private void OnEnable()
@@ -15,6 +15,10 @@ namespace  HungryWorm
             GameEvents.GameEnded += StopMovement;
             GameEvents.GamePaused += StopMovement;
             GameEvents.GameUnpaused += AllowMovement;
+            
+            SettingsEvents.JoystickTypeChanged += SettingsEvents_ModelJoystickTypeChanged;
+            PlayerPrefManager playerPrefManager = new PlayerPrefManager();
+            SettingsEvents_ModelJoystickTypeChanged(playerPrefManager.GetJoystickType());
         }
 
         private void OnDisable()
@@ -23,6 +27,8 @@ namespace  HungryWorm
             GameEvents.GameEnded -= StopMovement;
             GameEvents.GamePaused -= StopMovement;
             GameEvents.GameUnpaused -= AllowMovement;
+            
+            SettingsEvents.JoystickTypeChanged -= SettingsEvents_ModelJoystickTypeChanged;
         }
         
         private void AllowMovement()
@@ -41,8 +47,26 @@ namespace  HungryWorm
             {
                 return;
             }
-            Vector2 direction = Vector2.up * joystick.Vertical + Vector2.right * joystick.Horizontal;
+            Vector2 direction = Vector2.up * m_variableJoystick.Vertical + Vector2.right * m_variableJoystick.Horizontal;
             WormEvents.WormGoToDirection?.Invoke(direction);
+        }
+        
+        private void SettingsEvents_ModelJoystickTypeChanged(JoystickType joystickType)
+        {
+            // Debug.Log("GameScreen Joystick changed : " + joystickType);
+            
+            switch (joystickType)
+            {
+                case JoystickType.FIXED:
+                    m_variableJoystick.SetMode(global::JoystickType.Fixed);
+                    break;
+                case JoystickType.FLOATING:
+                    m_variableJoystick.SetMode(global::JoystickType.Floating);
+                    break;
+                case JoystickType.DYNAMIC:
+                    m_variableJoystick.SetMode(global::JoystickType.Dynamic);
+                    break;
+            }
         }
     }
 }

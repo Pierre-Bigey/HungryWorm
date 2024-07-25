@@ -5,7 +5,7 @@ namespace HungryWorm
 {
     public static class SettingsEvents
     {
-        // Presenter --> View: update UI sliders
+        // Presenter --> View: update UI 
         public static Action<float> MasterSliderSet;
         public static Action<float> SFXSliderSet;
         public static Action<float> MusicSliderSet;

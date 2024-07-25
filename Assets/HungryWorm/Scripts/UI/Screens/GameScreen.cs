@@ -17,8 +17,6 @@ namespace HungryWorm
 
         [SerializeField] private TMP_Text m_timerText;
         
-        [SerializeField] private VariableJoystick m_variableJoystick;
-        
         private TimeSpan timePlaying;
 
         /*private void Start()
@@ -38,18 +36,13 @@ namespace HungryWorm
 
         private void SubscribeEvents()
         {
-            SettingsEvents.JoystickTypeChanged += SettingsEvents_ModelJoystickTypeChanged;
-            
             UIEvents.TimerUpdated += UIEvents_TimerUpdated;
             UIEvents.HealthBarUpdated += UIEvents_HealthBarUpdated;
             UIEvents.ScoreUpdated += UIEvents_ScoreUpdated;
-            
         }
         
         private void UnsubscribeEvents()
         {
-            SettingsEvents.JoystickTypeChanged -= SettingsEvents_ModelJoystickTypeChanged;
-            
             UIEvents.TimerUpdated -= UIEvents_TimerUpdated;
             UIEvents.HealthBarUpdated -= UIEvents_HealthBarUpdated;
             UIEvents.ScoreUpdated -= UIEvents_ScoreUpdated;
@@ -61,23 +54,7 @@ namespace HungryWorm
             GameEvents.GamePaused?.Invoke();
         }
 
-        private void SettingsEvents_ModelJoystickTypeChanged(JoystickType joystickType)
-        {
-            // Debug.Log("GameScreen Joystick changed : " + joystickType);
-            
-            switch (joystickType)
-            {
-                case JoystickType.FIXED:
-                    m_variableJoystick.SetMode(global::JoystickType.Fixed);
-                    break;
-                case JoystickType.FLOATING:
-                    m_variableJoystick.SetMode(global::JoystickType.Floating);
-                    break;
-                case JoystickType.DYNAMIC:
-                    m_variableJoystick.SetMode(global::JoystickType.Dynamic);
-                    break;
-            }
-        }
+
         
         private void UIEvents_TimerUpdated(float time)
         {

@@ -61,7 +61,7 @@ namespace HungryWorm
         
         public JoystickType GetJoystickType()
         {
-            Debug.Log("PlayerPrefManager GetJoystickType: " + (JoystickType)UnityEngine.PlayerPrefs.GetInt("JoystickType", 0));
+            // Debug.Log("PlayerPrefManager GetJoystickType: " + (JoystickType)UnityEngine.PlayerPrefs.GetInt("JoystickType", 0));
             return (JoystickType)UnityEngine.PlayerPrefs.GetInt("JoystickType", 0);
         }
         
