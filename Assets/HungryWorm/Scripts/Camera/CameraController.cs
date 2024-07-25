@@ -26,15 +26,23 @@ public class CameraController : MonoBehaviour
     private Vector3 target;
     private Vector3 targetedObjectLastPosition;
     
-    public float leftEnd;
-    public float rightEnd;
+    private float leftEnd;
+    private float rightEnd;
 
-    public float leftEdge;
-    public float rightEdge;
+    private float leftEdge;
+    private float rightEdge;
+    
+    private SequenceManager sequenceManager;
+    private string gamePlayStateName;
 
     private void Start()
     {
+        sequenceManager = SequenceManager.Instance;
+        gamePlayStateName = SequenceManager.GamePlayStateName;
+        
         m_Camera = Camera.main;
+        ResetCameraPosition();
+        
         Vector3 leftEdgeVector = m_Camera.ViewportToWorldPoint(new Vector3(0, 0.5f, m_Camera.nearClipPlane));
         cameraSemiWidth = m_Camera.transform.position.x - leftEdgeVector.x;
     }
@@ -54,6 +62,8 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (sequenceManager.CurrentState.name != gamePlayStateName) return;
+        
         SetTarget();
         MoveCamera();
         CheckEdges();
@@ -114,5 +124,10 @@ public class CameraController : MonoBehaviour
     {
         //Debug.Log("Moving camera to " + target);
         m_Camera.transform.position = Vector3.SmoothDamp(m_Camera.transform.position, target, ref currentVelocity, m_SmoothTime);
+    }
+
+    private void ResetCameraPosition()
+    {
+        m_Camera.transform.position = new Vector3(0, 0, -10);
     }
 }

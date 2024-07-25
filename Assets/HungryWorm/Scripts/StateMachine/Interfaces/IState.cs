@@ -32,6 +32,8 @@ namespace HungryWorm
         /// </summary>
         /// <param name="link">the link to add</param>
         void AddLink(ILink link);
+        
+        string name { get; set; }
 
         /// <summary>
         /// Removes a transition link from the state

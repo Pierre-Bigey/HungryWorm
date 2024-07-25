@@ -21,6 +21,7 @@
         public void OnQuitButtonClicked()
         {
             UIEvents.MainMenuShown?.Invoke();
+            GameEvents.GameClosed?.Invoke();
             GameEvents.GameEnded?.Invoke();
         }
         

@@ -13,7 +13,6 @@ namespace HungryWorm
         [SerializeField] private UIScreen m_SettingsScreen;
         [SerializeField] private UIScreen m_GameScreen;
         [SerializeField] private UIScreen m_PauseScreen;
-        [SerializeField] private UIScreen m_GameSettingsScreen;
         [SerializeField] private UIScreen m_EndScreen; 
         [SerializeField] private UIScreen m_LeaderboardScreen;
         
@@ -139,7 +138,7 @@ namespace HungryWorm
         // Remove the top UI screen from the stack and make that active (i.e., go back one screen)
         public void UIEvents_ScreenClosed()
         {
-            Debug.Log("UIEvents_ScreenClosed");
+            // Debug.Log("UIEvents_ScreenClosed");
             if (m_History.Count != 0)
             {
                 Show(m_History.Pop(), false);
@@ -162,7 +161,6 @@ namespace HungryWorm
                 m_SettingsScreen,
                 m_GameScreen,
                 m_PauseScreen,
-                m_GameSettingsScreen,
                 m_EndScreen,
                 m_LeaderboardScreen
             };
@@ -190,14 +188,14 @@ namespace HungryWorm
         
         public void Show(UIScreen screen, bool keepInHistory = true)
         {
-            Debug.Log("Show UIScreen: " + screen + " keepInHistory: " + keepInHistory);
+            // Debug.Log("Show UIScreen: " + screen + " keepInHistory: " + keepInHistory);
             if (screen == null)
                 return;
 
             if (m_CurrentScreen != null)
             {
                 if (!screen.IsTransparent)
-                    Debug.Log("Hide UIScreen: " + m_CurrentScreen);
+                    // Debug.Log("Hide UIScreen: " + m_CurrentScreen);
                     m_CurrentScreen.Hide();
 
                 if (keepInHistory)

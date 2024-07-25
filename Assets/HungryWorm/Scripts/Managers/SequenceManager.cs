@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -12,6 +13,9 @@ namespace HungryWorm
     /// </summary>
     public class SequenceManager: MonoBehaviour
     {
+        // Singleton pattern
+        public static SequenceManager Instance { get; private set; }
+        
         // Inspector fields
         [Header("Preload (Splash Screen)")]
         [Tooltip("Prefab assets that load first. These can include level management Prefabs or textures, sounds, etc.")]
@@ -38,9 +42,34 @@ namespace HungryWorm
 
         IState m_GameEndState;          // Show the end game scree
         IState m_LeaderboardState;         // Show the leaderboard screen
+
+
+        public static string SplashScreenStateName = "LoadScreenState";
+        public static string StartScreenStateName = "StartScreenState";
+        public static string MainMenuStateName = "MainMenuState";
+        public static string MenuSettingsStateName = "SettingsState";
+        public static string GamePlayStateName = "GamePlayState";
+        public static string PauseStateName = "PauseState";
+        public static string GameSettingsStateName = "GameSettingsState";
+        public static string GameEndStateName = "GameEndState";
+        public static string LeaderboardStateName = "LeaderboardState";
         
         // Access to the StateMachine's CurrentState
         public IState CurrentState => m_StateMachine.CurrentState;
+        public string currentStateName;
+        
+        //Singleton Initialization
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
         
         #region MonoBehaviour event messages
         private void Start()
@@ -68,7 +97,12 @@ namespace HungryWorm
             SceneEvents.ExitApplication -= SceneEvents_ExitApplication;
             SceneEvents.StartGame -= SceneEvents_StartGame;
         }
-        
+
+        private void Update()
+        {
+            currentStateName = CurrentState.name;
+        }
+
         #endregion
         
         #region Methods
@@ -92,16 +126,16 @@ namespace HungryWorm
             // Optional names added for debugging
             // Executes GameEvents.LoadProgressUpdated every frame and GameEvents.PreloadCompleted on exit
             m_SplashScreenState = new DelayState(m_LoadScreenTime, SceneEvents.LoadProgressUpdated,
-                SceneEvents.PreloadCompleted, "LoadScreenState");
+                SceneEvents.PreloadCompleted, SplashScreenStateName);
 
-            m_StartScreenState = new State(null, "StartScreenState", m_Debug);
-            m_MainMenuState = new State(null, "MainMenuState", m_Debug);
-            m_MenuSettingsState = new State(null, "SettingsState", m_Debug);
-            m_GamePlayState = new State(null, "GamePlayState", m_Debug);
-            m_PauseState = new State(null, "PauseState", m_Debug);
-            m_GameSettingsState = new State(null, "GameSettingsState", m_Debug);
-            m_GameEndState = new State(null, "GameWinState", m_Debug);
-            m_LeaderboardState = new State(null, "GameLoseState", m_Debug);
+            m_StartScreenState = new State(null, StartScreenStateName, m_Debug);
+            m_MainMenuState = new State(null, MainMenuStateName, m_Debug);
+            m_MenuSettingsState = new State(null, MenuSettingsStateName, m_Debug);
+            m_GamePlayState = new State(null, GamePlayStateName, m_Debug);
+            m_PauseState = new State(null, PauseStateName, m_Debug);
+            m_GameSettingsState = new State(null, GameSettingsStateName, m_Debug);
+            m_GameEndState = new State(null, GameEndStateName, m_Debug);
+            m_LeaderboardState = new State(null, LeaderboardStateName, m_Debug);
         }
         
         // Define links between the states
@@ -145,8 +179,8 @@ namespace HungryWorm
   
             ActionWrapper gameEndWrapper = new ActionWrapper
             {
-                Subscribe = handler => GameEvents.GameEnded += handler,
-                Unsubscribe = handler => GameEvents.GameEnded -= handler
+                Subscribe = handler => UIEvents.EndScreenShown += handler,
+                Unsubscribe = handler => UIEvents.EndScreenShown -= handler
             };
 
             ActionWrapper leaderboardWrapper = new ActionWrapper
@@ -169,7 +203,7 @@ namespace HungryWorm
             
             m_GamePlayState.AddLink(new EventLink(gameEndWrapper, m_GameEndState));
 
-            m_GameEndState.AddLink(new EventLink(screenClosedWrapper, m_LeaderboardState));
+            m_GameEndState.AddLink(new EventLink(leaderboardWrapper, m_LeaderboardState));
 
             m_GameSettingsState.AddLink(new EventLink(screenClosedWrapper, m_PauseState));
 

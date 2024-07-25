@@ -19,7 +19,7 @@ namespace HungryWorm
         public State(Action onExecute, string stateName = nameof(State), bool enableDebug = false)
         {
             m_OnExecute = onExecute;
-            Name = stateName;
+            name = stateName;
 
             // Log the state changes in the console
             DebugEnabled = enableDebug;

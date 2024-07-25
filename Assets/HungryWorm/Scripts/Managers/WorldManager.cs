@@ -41,21 +41,21 @@ namespace HungryWorm
 
         private void OnEnable()
         {
-            GameEvents.GameStarted += EnableWorld;
-            GameEvents.GameClosed += DisableWorld;
+            GameEvents.GameStarted += InstantiateWorld;
+            GameEvents.GameClosed += ResetWorld;
             
             WorldEvents.MoveSlice += MoveSlice;
         }
         
         private void OnDisable()
         {
-            GameEvents.GameStarted -= EnableWorld;
-            GameEvents.GameClosed -= DisableWorld;
+            GameEvents.GameStarted -= InstantiateWorld;
+            GameEvents.GameClosed -= ResetWorld;
             
             WorldEvents.MoveSlice -= MoveSlice;
         }
         
-        private void EnableWorld()
+        private void InstantiateWorld()
         {
             for (int i = 0; i < m_poolSize; i++)
             {
@@ -71,10 +71,11 @@ namespace HungryWorm
             WorldEvents.RightEdgeUpdated?.Invoke(rightEnd);
         }
         
-        private void DisableWorld()
+        private void ResetWorld()
         {
             foreach (var worldSlice in worldSlicesPool)
             {
+                worldSlice.DisableSlice();
                 worldSlice.gameObject.SetActive(false);
             }
         }

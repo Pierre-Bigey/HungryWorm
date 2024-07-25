@@ -10,10 +10,7 @@ namespace HungryWorm
     /// </summary>
     public abstract class AbstractState : IState
     {
-        /// <summary>
-        /// The name of the state used for debugging purposes
-        /// </summary>
-        public virtual string Name { get; set; }
+        public string name { get; set; }
 
         // Enable debug messages
         protected bool m_Debug = false;
@@ -91,7 +88,7 @@ namespace HungryWorm
         public virtual void LogCurrentState()
         {
             if (m_Debug)
-                Debug.Log("Current state = " + Name + "(" + this.GetType().Name + ")");
+                Debug.Log("Current state = " + name + "(" + this.GetType().Name + ")");
         }
     }
 }
