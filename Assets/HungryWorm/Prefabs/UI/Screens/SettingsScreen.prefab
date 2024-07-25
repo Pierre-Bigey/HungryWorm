@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 6632630541984514761}
   - component: {fileID: 331306588732144270}
   m_Layer: 0
-  m_Name: Settings
+  m_Name: SettingsScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

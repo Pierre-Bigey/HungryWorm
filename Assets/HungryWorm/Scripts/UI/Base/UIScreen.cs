@@ -17,7 +17,7 @@ namespace HungryWorm
         public bool IsTransparent => m_IsTransparent;
         public bool IsHidden => this.gameObject.activeSelf;
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             Initialize();
         }
