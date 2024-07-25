@@ -48,6 +48,6 @@ MonoBehaviour:
   m_HeadPrefab: {fileID: 6005515118327316486, guid: 3faa849618f3d754a82d47982045aa35, type: 3}
   m_BodySegmentPrefab: {fileID: 6005515118327316486, guid: b8dd5effd85154c4f88d1b54f58aa179, type: 3}
   m_TailPrefab: {fileID: 6005515118327316486, guid: 7c2efcd4230004b4b8769e036021a03e, type: 3}
-  m_BodySegmentsCount: 5
-  m_DistanceFromHead: 0.7
-  m_DistanceBetweenSegments: 0.75
+  m_BodySegmentsCount: 7
+  m_DistanceFromHead: 0.5
+  m_DistanceBetweenSegments: 0.6

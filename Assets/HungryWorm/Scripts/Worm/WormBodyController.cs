@@ -81,6 +81,7 @@ public class WormBodyController : MonoBehaviour
         for (int i = 1; i < m_BodySegments.Count; i++)
         {
             Vector3 difference = m_BodySegments[i].position - m_BodySegments[i-1].position;
+            difference.z = 0;
             //Check if the distance is greater than the distance between segments
             if (difference.magnitude > m_DistanceBetweenSegments)
             {

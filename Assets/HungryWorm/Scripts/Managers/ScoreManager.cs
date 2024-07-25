@@ -71,6 +71,8 @@ namespace HungryWorm
         private void GameEvents_OnGameStarted()
         {
             m_score = 0;
+            m_MinesExploded = 0;
+            m_HumansEaten = 0;
             UIEvents.ScoreUpdated?.Invoke(m_score);
         }
         
