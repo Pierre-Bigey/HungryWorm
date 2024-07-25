@@ -66,7 +66,12 @@ public class PlayerController : MonoBehaviour
     {
         UnsubscribeEvents();
     }
-    
+
+    private void LateUpdate()
+    {
+        transform.right = m_rigidbody2D.velocity.normalized;
+    }
+
     private void SubscribeEvents()
     {
         WormEvents.DamageTaken += GameEvents_DamageTaken;
