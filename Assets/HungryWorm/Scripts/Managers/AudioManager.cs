@@ -11,9 +11,9 @@ namespace HungryWorm
         [SerializeField] AudioMixer m_AudioMixer;
         
         // AudioMixer group names
-        const string k_SFXVolume = "SFXVolume";
-        const string k_MusicVolume = "MusicVolume";
-        const string k_MasterVolume = "MasterVolume";
+        const string k_SFXVolume = "SFX";
+        const string k_MusicVolume = "Music";
+        const string k_MasterVolume = "Master";
         
         [Header("Audio Sources")]
         [Tooltip("AudioSource dedicated to playing sound effects")]
