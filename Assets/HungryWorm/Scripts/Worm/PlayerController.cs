@@ -6,6 +6,8 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+    
     private float m_health;
     private bool m_isInDirt;
     
@@ -38,11 +40,22 @@ public class PlayerController : MonoBehaviour
 
     private bool m_supperposedDirt;
 
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     private void Start()
     {
-        
         InitializeValues();
-
     }
 
     private void InitializeValues()
