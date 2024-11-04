@@ -129,6 +129,52 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &875603346715226534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4717490572214379260}
+  - component: {fileID: 7399343754569626882}
+  m_Layer: 0
+  m_Name: AudioSourceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4717490572214379260
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875603346715226534}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5365220872798922067}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7399343754569626882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875603346715226534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e77850e13de964ba05154f05064a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StartingSourceCount: 5
+  audioMixerGroup: {fileID: 3519623228889069405, guid: 3c498f72c800561439465cc56e03d55a, type: 2}
 --- !u!1 &1723789687666904967
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,6 +208,7 @@ Transform:
   m_Children:
   - {fileID: 2891959384993959959}
   - {fileID: 611727073217202859}
+  - {fileID: 4717490572214379260}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6820298401279909670
@@ -177,9 +224,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AudioMixer: {fileID: 24100000, guid: 3c498f72c800561439465cc56e03d55a, type: 2}
-  m_SFXAudioSource: {fileID: 8626313287470270323}
+  m_AudioSourceManager: {fileID: 7399343754569626882}
   m_MusicAudioSource: {fileID: 2150808124748232327}
+  m_buttonClickClip: {fileID: 8300000, guid: 2fbd7954a41d2164e8738044e1f7450c, type: 3}
   m_explosionClip: {fileID: 8300000, guid: f9eb44b85c96be5429737d4dcadbfa3b, type: 3}
+  m_bloodSplatterClip: {fileID: 8300000, guid: 69d95c0785759de409f3bc5055368b0c, type: 3}
 --- !u!114 &5502413182316679431
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,6 +22,8 @@ namespace HungryWorm
         
         
         public static Action<Vector3> MineExploded;
+        
+        public static Action<Vector3> BloodSplatter;
 
     }
 }

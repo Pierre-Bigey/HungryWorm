@@ -7,21 +7,26 @@ namespace HungryWorm.Scripts.Animation
 {
     public class AnimationController: MonoBehaviour
     {
-        private Animator _animator;
 
+        [SerializeField] private int animation_number = 1;
+        
+        private Animator _animator;
         private float lifetime;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            // Debug.Log("Animator state info length: " + stateInfo.length + " speed: " + stateInfo.speed);
-            lifetime = stateInfo.length * stateInfo.speed;
+            
         }
 
         private void OnEnable()
         {
             StartCoroutine(WaitAndDisable());
+            int animation = UnityEngine.Random.Range(1, animation_number+1);
+            _animator.SetInteger("Animation", animation);
+            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            // Debug.Log("Animator state "+stateInfo.shortNameHash+" length: " + stateInfo.length + " speed: " + stateInfo.speed);
+            lifetime = stateInfo.length * stateInfo.speed;
         }
         
         private IEnumerator WaitAndDisable()

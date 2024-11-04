@@ -8,23 +8,21 @@ namespace HungryWorm
     {
         
         [Tooltip("AudioMixer for audio")]
-        [SerializeField] AudioMixer m_AudioMixer;
+        [SerializeField] private AudioMixer m_AudioMixer;
+        [SerializeField] private AudioSourceManager m_AudioSourceManager;
         
         // AudioMixer group names
         const string k_SFXVolume = "SFX";
         const string k_MusicVolume = "Music";
         const string k_MasterVolume = "Master";
         
-        [Header("Audio Sources")]
-        [Tooltip("AudioSource dedicated to playing sound effects")]
-        [SerializeField] AudioSource m_SFXAudioSource;
-
         [Tooltip("AudioSource dedicated to playing music")]
         [SerializeField] [Optional] AudioSource m_MusicAudioSource;
         
         [Header("Audio Clips")]
         [SerializeField] private AudioClip m_buttonClickClip;
         [SerializeField] private AudioClip m_explosionClip;
+        [SerializeField] private AudioClip m_bloodSplatterClip;
         
         
         
@@ -54,6 +52,7 @@ namespace HungryWorm
             UIEvents.ButtonClicked += PlayButtonSound;
             
             WormEvents.MineExploded += WormEvents_MineExploded;
+            WormEvents.BloodSplatter += WormEvents_BloodSplatter;
         }
         
         private void UnsubscribeEvents()
@@ -65,6 +64,7 @@ namespace HungryWorm
             UIEvents.ButtonClicked -= PlayButtonSound;
             
             WormEvents.MineExploded -= WormEvents_MineExploded;
+            WormEvents.BloodSplatter -= WormEvents_BloodSplatter;
         }
         
         #region Event-handling methods (responds to volume change events, raised by the SettingsPresenter)
@@ -91,37 +91,21 @@ namespace HungryWorm
 
         private void PlayButtonSound()
         {
-            m_SFXAudioSource.PlayOneShot(m_buttonClickClip);
+            m_AudioSourceManager.PlayClip(m_buttonClickClip);
         }
         
         private void WormEvents_MineExploded(Vector3 position)
         {
-            PlaySFXAtPoint(m_explosionClip, position);
+            m_AudioSourceManager.PlayClip(m_explosionClip);
+        }
+        
+        private void WormEvents_BloodSplatter(Vector3 position)
+        {
+            m_AudioSourceManager.PlayClip(m_bloodSplatterClip);
         }
         
         #region Methods
-
-        // Play a sound effect at the specified position.
-        public void PlaySFXAtPoint(AudioClip clip, Vector3 position, float delay = 0f, bool loop = false)
-        {
-            m_SFXAudioSource.Stop();
-            StartCoroutine(PlaySFXAtPointDelayed(clip, position, delay, loop));
-        }
-
-        // Coroutine to play a sound effect at the specified position with a delay.
-        private IEnumerator PlaySFXAtPointDelayed(AudioClip clip, Vector3 position, float delay, bool loop)
-        {
-            yield return new WaitForSeconds(delay);
-
-            m_SFXAudioSource.transform.position = position;
-            m_SFXAudioSource.loop = loop;
-
-            if (clip != null)
-                m_SFXAudioSource.PlayOneShot(clip);
-            else
-                m_SFXAudioSource.Stop();
-        }
-
+        
         // Play music with the specified AudioClip (unused in this demo)
         public void PlayMusic(AudioClip clip, bool loop = true)
         {

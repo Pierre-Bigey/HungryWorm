@@ -38,6 +38,7 @@ namespace HungryWorm.Scripts.Food
         private void Kill()
         {
             gameObject.SetActive(false);
+            WormEvents.BloodSplatter?.Invoke(transform.position);
         }
     }
 }
