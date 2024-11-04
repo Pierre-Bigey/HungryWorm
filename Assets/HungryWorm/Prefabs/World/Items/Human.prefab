@@ -49,11 +49,17 @@ MonoBehaviour:
   m_foodValue: 5
   m_scoreValue: 50
   HumanModels:
-  - {fileID: 1015638937580331669, guid: 2563362088e74a741a00968d7ed82942, type: 3}
   - {fileID: 1015638937580331669, guid: d26c0820c2d12284898114ee5dc7660e, type: 3}
   - {fileID: 1015638937580331669, guid: cfc475d091573904c8f642603513ce47, type: 3}
-  - {fileID: 1015638937580331669, guid: 3dc8393e91e1e604dbd8049a2358beb5, type: 3}
   - {fileID: 1015638937580331669, guid: 81b28bcdbac760848986a74fcac1ec17, type: 3}
+  - {fileID: 1015638937580331669, guid: 3dc8393e91e1e604dbd8049a2358beb5, type: 3}
+  - {fileID: 1015638937580331669, guid: 2563362088e74a741a00968d7ed82942, type: 3}
+  - {fileID: 8165278689944859345, guid: 9072b10b85be01e4da01fbae0b817d3a, type: 3}
+  - {fileID: 6631473682298011253, guid: 3fb5313643c3f054cbcf0f0c6a6ce7d7, type: 3}
+  - {fileID: 1015638937580331669, guid: 1cb4864dfdeffbf43996fcb7b35bfe72, type: 3}
+  - {fileID: 6889088501387890335, guid: f4c418b766202ab46a8bb7408a1fde8b, type: 3}
+  m_distanceToSeeWorm: 10
+  m_timeToCalm: 5
 --- !u!61 &-6096953284374875992
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -98,7 +104,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.6}
+  m_Size: {x: 1, y: 1.6}
   m_EdgeRadius: 0
 --- !u!114 &7716126626383303680
 MonoBehaviour:

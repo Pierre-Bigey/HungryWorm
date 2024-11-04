@@ -42,7 +42,8 @@ namespace HungryWorm.Scripts.Food
 
             m_playerController = PlayerController.Instance;
             
-            m_speed = UnityEngine.Random.Range(1, 3);
+            m_speed = UnityEngine.Random.Range(2.5f, 4.5f);
+            m_AnimatorController.speed = 1;
         }
 
         private void Update()
@@ -56,6 +57,7 @@ namespace HungryWorm.Scripts.Food
                 {
                     sawTheWorm = false;
                     m_AnimatorController.SetBool("Walk", false);
+                    m_AnimatorController.speed = 1;
                 }
             }
         }
@@ -91,6 +93,7 @@ namespace HungryWorm.Scripts.Food
                 m_model.transform.localRotation = Quaternion.Euler(0, angle, 0);
                 
                 sawTheWorm = true;
+                m_AnimatorController.speed = m_speed;
                 m_AnimatorController.SetBool("Walk", true);
                 m_timeWhenSawTheWorm = Time.time;
             }
