@@ -165,7 +165,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 81.2
+  m_fontSize: 134.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.5
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -566,7 +566,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.7
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -737,7 +737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1497611609845245569, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_fontSize
-      value: 55.65
+      value: 92.2
       objectReference: {fileID: 0}
     - target: {fileID: 4132023980105255664, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_Pivot.x
@@ -939,7 +939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1591670577153550367, guid: 0bc4699e206c73c47bb58eb4e34c0613, type: 3}
       propertyPath: m_fontSize
-      value: 43.5
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 1591670577153550367, guid: 0bc4699e206c73c47bb58eb4e34c0613, type: 3}
       propertyPath: m_fontSizeMin
@@ -963,7 +963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6541949121454050028, guid: 0bc4699e206c73c47bb58eb4e34c0613, type: 3}
       propertyPath: m_fontSize
-      value: 43.5
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 6541949121454050028, guid: 0bc4699e206c73c47bb58eb4e34c0613, type: 3}
       propertyPath: m_fontSizeMin
@@ -1088,7 +1088,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1591670577153550367, guid: 0bc4699e206c73c47bb58eb4e34c0613, type: 3}
       propertyPath: m_fontSize
-      value: 43.5
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 1591670577153550367, guid: 0bc4699e206c73c47bb58eb4e34c0613, type: 3}
       propertyPath: m_fontSizeMin
@@ -1112,7 +1112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6541949121454050028, guid: 0bc4699e206c73c47bb58eb4e34c0613, type: 3}
       propertyPath: m_fontSize
-      value: 43.5
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 6541949121454050028, guid: 0bc4699e206c73c47bb58eb4e34c0613, type: 3}
       propertyPath: m_fontSizeMin

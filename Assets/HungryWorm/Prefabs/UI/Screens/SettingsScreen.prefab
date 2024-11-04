@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HideOnAwake: 1
-  m_IsTransparent: 1
+  m_IsTransparent: 0
   m_MasterVolumeSlider: {fileID: 5946565997213869835}
   m_SFXVolumeSlider: {fileID: 3074273226060036442}
   m_MusicVolumeSlider: {fileID: 7835320829905234694}
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 67.4
+  m_fontSize: 111.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -631,7 +631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386843859253816988, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_fontSize
-      value: 33.35
+      value: 55.25
       objectReference: {fileID: 0}
     - target: {fileID: 5139874680693167838, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_Name
@@ -731,7 +731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8186223723906871025, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_fontSize
-      value: 50.05
+      value: 72
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -779,7 +779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1497611609845245569, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_fontSize
-      value: 69.75
+      value: 133.95
       objectReference: {fileID: 0}
     - target: {fileID: 4132023980105255664, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_Pivot.x
@@ -929,7 +929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386843859253816988, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_fontSize
-      value: 33.35
+      value: 55.25
       objectReference: {fileID: 0}
     - target: {fileID: 5139874680693167838, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_Name
@@ -1029,7 +1029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8186223723906871025, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_fontSize
-      value: 48.05
+      value: 72
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1078,6 +1078,10 @@ PrefabInstance:
     - target: {fileID: 1899095274351637000, guid: 90121d360d34ef94cbcb67973112eb4b, type: 3}
       propertyPath: m_Name
       value: Layout
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948513886908704686, guid: 90121d360d34ef94cbcb67973112eb4b, type: 3}
+      propertyPath: m_fontSize
+      value: 119.1
       objectReference: {fileID: 0}
     - target: {fileID: 2027400880283765446, guid: 90121d360d34ef94cbcb67973112eb4b, type: 3}
       propertyPath: m_Pivot.x
@@ -1167,6 +1171,14 @@ PrefabInstance:
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 331306588732144270}
+    - target: {fileID: 6733886654240935253, guid: 90121d360d34ef94cbcb67973112eb4b, type: 3}
+      propertyPath: m_fontSize
+      value: 80.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716553149963590789, guid: 90121d360d34ef94cbcb67973112eb4b, type: 3}
+      propertyPath: m_fontSize
+      value: 87.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1240,7 +1252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4386843859253816988, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_fontSize
-      value: 34.35
+      value: 56.9
       objectReference: {fileID: 0}
     - target: {fileID: 5139874680693167838, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_Name
@@ -1336,7 +1348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8186223723906871025, guid: 993d47d36bb09524ba671d775cad7d67, type: 3}
       propertyPath: m_fontSize
-      value: 42.05
+      value: 72
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1386,7 +1398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1497611609845245569, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_fontSize
-      value: 80.9
+      value: 133.95
       objectReference: {fileID: 0}
     - target: {fileID: 4132023980105255664, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_Pivot.x

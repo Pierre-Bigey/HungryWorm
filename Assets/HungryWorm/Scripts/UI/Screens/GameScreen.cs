@@ -50,6 +50,7 @@ namespace HungryWorm
         
         public void OnPauseButtonPressed()
         {
+            Clicked();
             UIEvents.PauseScreenShown?.Invoke();
             GameEvents.GamePaused?.Invoke();
         }

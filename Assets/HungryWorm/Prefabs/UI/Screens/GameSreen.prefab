@@ -804,8 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HideOnAwake: 1
-  m_IsTransparent: 1
+  m_IsTransparent: 0
   m_healthBar: {fileID: 1858449219363109768}
   m_scoreText: {fileID: 8529428632100125929}
   m_timerText: {fileID: 5733468119456071635}
-  m_variableJoystick: {fileID: 0}

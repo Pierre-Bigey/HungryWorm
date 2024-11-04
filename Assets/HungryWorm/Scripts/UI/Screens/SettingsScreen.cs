@@ -94,12 +94,14 @@ namespace HungryWorm
 
         public void BackButtonClicked()
         {
+            Clicked();
             SettingsEvents.SaveAll?.Invoke();
             UIEvents.ScreenClosed?.Invoke();
         }
         
         public void ResetButtonClicked()
         {
+            Clicked();
             SettingsEvents.ResetAll?.Invoke();
         }
         
@@ -126,6 +128,7 @@ namespace HungryWorm
             if (isOn)
             {
                 SettingsEvents.JoystickTypeButtonChanged(JoystickType.FIXED);
+                Clicked();
             }
         }
         
@@ -134,6 +137,7 @@ namespace HungryWorm
             if (isOn)
             {
                 SettingsEvents.JoystickTypeButtonChanged(JoystickType.FLOATING);
+                Clicked();
             }
         }
         
@@ -142,6 +146,7 @@ namespace HungryWorm
             if (isOn)
             {
                 SettingsEvents.JoystickTypeButtonChanged(JoystickType.DYNAMIC);
+                Clicked();
             }
         }
     }

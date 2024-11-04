@@ -36,6 +36,11 @@ namespace HungryWorm
             //Debug.Log("Setting inactive : " + this.gameObject.name);
         }
         
+        public void Clicked()
+        {
+            UIEvents.ButtonClicked?.Invoke();
+        }
+        
         
     }
 }

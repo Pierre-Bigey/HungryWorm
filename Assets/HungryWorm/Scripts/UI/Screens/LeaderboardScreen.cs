@@ -5,11 +5,13 @@
         
         public void OnRestartClicked()
         {
+            Clicked();
             SceneEvents.StartGame?.Invoke();
         }
         
         public void OnMainMenuClicked()
         {
+            Clicked();
             UIEvents.MainMenuShown?.Invoke();
         }
     }

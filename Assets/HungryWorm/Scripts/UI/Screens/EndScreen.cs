@@ -27,6 +27,7 @@ namespace HungryWorm
 
         public void OnNextClicked()
         {
+            Clicked();
             UIEvents.LeaderboardScreenShown?.Invoke();
             GameEvents.GameClosed?.Invoke();
         }

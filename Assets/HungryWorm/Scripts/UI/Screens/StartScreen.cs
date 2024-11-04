@@ -6,6 +6,7 @@
 
         public void StartButtonPressed()
         {
+            Clicked();
             UIEvents.MainMenuShown?.Invoke();
         }
     }

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8096364089703193626
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0edfc02b38874747bb03cff4957d7ef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HideOnAwake: 1
+  m_HideOnAwake: 0
   m_IsTransparent: 0
 --- !u!1 &3320676632968922424
 GameObject:
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 134.25
+  m_fontSize: 180
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -145,7 +145,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75.15
+  m_fontSize: 124.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -352,7 +352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1497611609845245569, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_fontSize
-      value: 64.4
+      value: 106.7
       objectReference: {fileID: 0}
     - target: {fileID: 4132023980105255664, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_Pivot.x
@@ -478,7 +478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1497611609845245569, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_fontSize
-      value: 64.4
+      value: 106.7
       objectReference: {fileID: 0}
     - target: {fileID: 4132023980105255664, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_Pivot.x
@@ -604,7 +604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1497611609845245569, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_fontSize
-      value: 64.4
+      value: 106.7
       objectReference: {fileID: 0}
     - target: {fileID: 4132023980105255664, guid: 08532e1ce41967d4099dee29e4e0c55b, type: 3}
       propertyPath: m_Pivot.x

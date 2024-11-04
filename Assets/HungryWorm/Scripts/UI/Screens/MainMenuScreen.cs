@@ -15,17 +15,20 @@ namespace HungryWorm
 
         public void SettingsButtonClicked()
         {
+            Clicked();
             UIEvents.SettingsShown?.Invoke();
         }
 
         public void PlayButtonClicked()
         {
+            Clicked();
             //UIEvents.GameScreenShown?.Invoke();
             SceneEvents.StartGame?.Invoke();
         }
 
         public void QuitButtonClicked()
         {
+            Clicked();
             SceneEvents.ExitApplication?.Invoke();
         }
     }
