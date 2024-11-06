@@ -13,6 +13,7 @@ public class BackgroundParallax : MonoBehaviour
     void Start()
     {
         cam = Camera.main.gameObject;
+        transform.parent.parent = cam.transform;
         startpos = transform.position.x;
         length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
@@ -24,7 +25,8 @@ public class BackgroundParallax : MonoBehaviour
         
         transform.position = new Vector3(startpos + dist, transform.position.y, transform.position.z);
         
-        //Keep the y at the world 0 level
+        //Reset the world position y to 0
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         
         if (temp > startpos + length) startpos += length;
         else if (temp < startpos - length) startpos -= length;
