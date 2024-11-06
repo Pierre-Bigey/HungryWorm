@@ -1,6 +1,8 @@
-﻿
+﻿# Hungry Worm
 
+The goal of this project is to re-create the Flash game 'Effing Worm' I played as a child.
 
+ **DEVELOPMENT IN PROGRESS**
 
 ## Assets and References
 
