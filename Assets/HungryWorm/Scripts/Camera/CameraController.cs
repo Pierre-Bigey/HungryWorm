@@ -9,8 +9,12 @@ public class CameraController : MonoBehaviour
     
     [Header("Margins")]
     [SerializeField] private float depth = -10;
-    [SerializeField] private float m_HorizontalMargin = 0.1f;
-    [SerializeField] private float m_VerticalMargin = 0.1f;
+    [SerializeField] private float m_HorizontalMargin = 0.4f;
+    [SerializeField] private float m_VerticalMargin = 0.4f;
+    [SerializeField] private float m_AirTopMargin = 0.5f;
+    [SerializeField] private float m_GroundedBottomMargin = 0.2f;
+    [SerializeField] private float m_DeepGroundedBottomMargin = 0.4f;
+    
     
     [Header("World Slices settings")]
     [SerializeField] private float m_bufferSize = 5f;
@@ -60,10 +64,16 @@ public class CameraController : MonoBehaviour
         WorldEvents.RightEdgeUpdated -= WorldEvents_RightEdgeUpdated;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (sequenceManager.CurrentState.name != gamePlayStateName) return;
         
+        
+    }
+
+    private void LateUpdate()
+    {
+        if (sequenceManager.CurrentState.name != gamePlayStateName) return;
         SetTarget();
         MoveCamera();
         CheckEdges();
@@ -93,8 +103,32 @@ public class CameraController : MonoBehaviour
         
         Vector3 movementDelta = m_TargetedObject.position - targetedObjectLastPosition;
         Vector3 screenPos = m_Camera.WorldToScreenPoint(m_TargetedObject.position);
-        Vector3 bottomLeft = m_Camera.ViewportToScreenPoint(new Vector3(m_HorizontalMargin,m_VerticalMargin,0));
-        Vector3 topRight = m_Camera.ViewportToScreenPoint(new Vector3(1-m_HorizontalMargin, 1-m_VerticalMargin, 0));
+
+        bool isGrounded = m_TargetedObject.transform.position.y < -0.5f;
+
+        float topMargin = 0;
+        float bottomMargin = 0;
+
+        float speed = 1;
+
+        if (isGrounded)
+        {
+            topMargin = m_VerticalMargin;
+            bottomMargin = m_GroundedBottomMargin;
+            if (m_TargetedObject.transform.position.y < -5f)
+            {
+                speed = 1.2f;
+                bottomMargin = m_DeepGroundedBottomMargin;
+            }
+        }
+        else
+        {
+            topMargin = m_AirTopMargin;
+            bottomMargin = m_VerticalMargin;
+        }
+        
+        Vector3 bottomLeft = m_Camera.ViewportToScreenPoint(new Vector3(m_HorizontalMargin,bottomMargin,0));
+        Vector3 topRight = m_Camera.ViewportToScreenPoint(new Vector3(1-m_HorizontalMargin, 1-topMargin, 0));
 
         if (screenPos.x < bottomLeft.x || screenPos.x > topRight.x)
         {
@@ -103,8 +137,15 @@ public class CameraController : MonoBehaviour
 
         if (screenPos.y < bottomLeft.y || screenPos.y > topRight.y)
         {
-            target.y += movementDelta.y;
+            target.y += movementDelta.y * speed;
         }
+        
+        // Debug section :
+        // Draw line to outline the margin area
+        Debug.DrawLine(m_Camera.ScreenToWorldPoint(new Vector3(bottomLeft.x, bottomLeft.y, 10)), m_Camera.ScreenToWorldPoint(new Vector3(topRight.x, bottomLeft.y, 10)), Color.red);
+        Debug.DrawLine(m_Camera.ScreenToWorldPoint(new Vector3(topRight.x, bottomLeft.y, 10)), m_Camera.ScreenToWorldPoint(new Vector3(topRight.x, topRight.y, 10)), Color.red);
+        Debug.DrawLine(m_Camera.ScreenToWorldPoint(new Vector3(topRight.x, topRight.y, 10)), m_Camera.ScreenToWorldPoint(new Vector3(bottomLeft.x, topRight.y, 10)), Color.red);
+        Debug.DrawLine(m_Camera.ScreenToWorldPoint(new Vector3(bottomLeft.x, topRight.y, 10)), m_Camera.ScreenToWorldPoint(new Vector3(bottomLeft.x, bottomLeft.y, 10)), Color.red);
 
         target.z = depth;
         targetedObjectLastPosition = m_TargetedObject.position;
@@ -124,6 +165,7 @@ public class CameraController : MonoBehaviour
     {
         //Debug.Log("Moving camera to " + target);
         m_Camera.transform.position = Vector3.SmoothDamp(m_Camera.transform.position, target, ref currentVelocity, m_SmoothTime);
+        // m_Camera.transform.position = target;
     }
 
     private void ResetCameraPosition()
