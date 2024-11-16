@@ -33,6 +33,7 @@ namespace HungryWorm.Scripts.Animation
         {
             yield return new WaitForSeconds(lifetime);
             // Debug.Log("Disable animation");
+            _animator.SetInteger("Animation", 0);
             gameObject.SetActive(false);
         }
         

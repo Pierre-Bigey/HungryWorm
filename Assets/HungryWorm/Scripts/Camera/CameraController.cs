@@ -65,13 +65,6 @@ namespace HungryWorm
             WorldEvents.RightEdgeUpdated -= WorldEvents_RightEdgeUpdated;
         }
 
-        private void Update()
-        {
-            if (sequenceManager.CurrentState.name != gamePlayStateName) return;
-
-
-        }
-
         private void LateUpdate()
         {
             if (sequenceManager.CurrentState.name != gamePlayStateName) return;

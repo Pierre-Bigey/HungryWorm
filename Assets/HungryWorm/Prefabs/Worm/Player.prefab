@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4161904046868420960}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1471402455
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
@@ -191,7 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439285d3fade8a346840eb23ff5b7684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TargetedObject: {fileID: 0}
   m_SmoothTime: 0.1
   depth: -10
   m_HorizontalMargin: 0.4

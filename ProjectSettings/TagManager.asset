@@ -19,8 +19,8 @@ TagManager:
   - Mine
   - ParticleBlocker
   - Particle
-  - 
-  - 
+  - Plane
+  - Weapons
   - 
   - 
   - 
@@ -68,6 +68,9 @@ TagManager:
     locked: 0
   - name: BedRock
     uniqueID: 1561364251
+    locked: 0
+  - name: Plane
+    uniqueID: 3579989979
     locked: 0
   - name: Default
     uniqueID: 0
