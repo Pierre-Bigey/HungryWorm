@@ -47,8 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ExplosionPrefab: {fileID: 9168093297215220177, guid: 6cbe6bf0063462040980d9ac95fcbaab, type: 3}
   explosionPoolSize: 3
-  m_BloodPrefab: {fileID: 9168093297215220177, guid: 42b113b9b5716f843aa8dedfe1fec75b, type: 3}
+  m_BloodPrefab: {fileID: 6992899751894687966, guid: c86f3e3d62d49e94b933748c14176c2b, type: 3}
   bloodSize: 5
+  m_animationZpos: 1
 --- !u!114 &-2153668100558658870
 MonoBehaviour:
   m_ObjectHideFlags: 0
