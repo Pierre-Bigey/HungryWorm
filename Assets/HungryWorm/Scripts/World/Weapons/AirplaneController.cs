@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
-using UnityEngine.XR;
 
 namespace HungryWorm
 {
+    #region State Machine
     public enum Step
     {
         Enter,
@@ -112,20 +112,32 @@ namespace HungryWorm
         {
             float distance = airplaneController.transform.position.x - m_player.transform.position.x;
             bool playerInFront = airplaneController.movingRight ? distance < 0 : distance > 0;
-            if (!m_playerController.InDirt && playerInFront && Math.Abs(distance) < m_distanceToFireMissile)
+            if ( playerInFront && Math.Abs(distance) < m_distanceToFireMissile)
             {
-                PointLaser();
+                if (!m_playerController.InDirt)
+                {
+                    DetecPlayer();
+                }
+                else
+                {
+                    // Else shoot a laser around the player to see if we can hit him 
+                    PointLaserAround();
+                }
             }
+            // If the player is not in front of the airplane, stop the laser
             else
             {
+                
                 airplaneController.m_Laser.gameObject.SetActive(false);
+                if(m_isAquiringTarget) AudioManager.Instance.StopMissileAcquiringSound();
                 m_isAquiringTarget = false;
-                AudioManager.Instance.StopMissileAcquiringSound();
+                
             }
         }
 
-        private void PointLaser()
+        private void DetecPlayer()
         {
+            //Start Forward Raycast
             Vector3 direction = m_player.transform.position - airplaneController.m_LaserStartPoint.position;
             Ray ray = new Ray(airplaneController.m_LaserStartPoint.position, direction);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000);
@@ -138,32 +150,80 @@ namespace HungryWorm
                 //Check if it's part of the player layer
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
-                    if (m_isAquiringTarget)
+                    PointLaser(hit.collider.gameObject);
+                }
+            }
+        }
+
+        private void PointLaser(GameObject collider)
+        {
+            if (m_isAquiringTarget)
+            {
+                if (Time.time - m_timeSinceAquiringTarget > m_timeToFireMissile)
+                {
+                    // Anticipate where the player will be when the missile reaches him
+                    Rigidbody2D playerRigidbody = m_player.GetComponent<Rigidbody2D>();
+                    float timeToReachPlayer = Vector2.Distance(airplaneController.m_MissileSpawnPoint.position, collider.transform.position) / (5 * 2) - 0.2f;
+                    Vector3 target = collider.transform.position; //+ new Vector3(playerRigidbody.velocity.x * timeToReachPlayer, playerRigidbody.velocity.y * timeToReachPlayer, 0);
+                    Debug.Log("Firing on : " + collider.name);
+                    airplaneController.FireMissile(target);
+                    step = Step.Exit;
+                }
+            }
+            else
+            {
+                m_isAquiringTarget = true;
+                m_timeSinceAquiringTarget = Time.time;
+                AudioManager.Instance.PlayMissileAcquiringSound();
+            }
+        }
+
+        private void PointLaserAround()
+        {
+            float playerY = m_player.transform.position.y;
+            // Add 5 degrees to the direction in both directions
+            Vector3 directionRight = m_player.transform.position + new Vector3(1,1-playerY,0)- airplaneController.m_LaserStartPoint.position;
+            Vector3 directionLeft =m_player.transform.position + new Vector3(-1,1-playerY,0)- airplaneController.m_LaserStartPoint.position;
+            
+            Ray rayRight = new Ray(airplaneController.m_LaserStartPoint.position, directionRight);
+            Ray rayLeft = new Ray(airplaneController.m_LaserStartPoint.position, directionLeft);
+            
+            RaycastHit2D hitRight = Physics2D.Raycast(rayRight.origin, rayRight.direction, 1000);
+
+            if (hitRight.collider != null)
+            {
+                if (hitRight.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+                {
+                    airplaneController.m_Laser.SetLaser(airplaneController.m_LaserStartPoint.position, hitRight.point);
+                    airplaneController.m_Laser.gameObject.SetActive(true);
+                    PointLaser(hitRight.collider.gameObject);
+                }
+            }
+            else
+            {
+                RaycastHit2D hitLeft = Physics2D.Raycast(rayLeft.origin, rayLeft.direction, 1000);
+                if (hitLeft.collider != null)
+                {
+                    if (hitLeft.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
-                        if (Time.time - m_timeSinceAquiringTarget > m_timeToFireMissile)
-                        {
-                            step = Step.Exit;
-                        }
-                    }
-                    else
-                    {
-                        m_isAquiringTarget = true;
-                        m_timeSinceAquiringTarget = Time.time;
-                        AudioManager.Instance.PlayMissileAcquiringSound();
+                        airplaneController.m_Laser.SetLaser(airplaneController.m_LaserStartPoint.position, hitLeft.point);
+                        airplaneController.m_Laser.gameObject.SetActive(true);
+                        PointLaser(hitLeft.collider.gameObject);
                     }
                 }
             }
+
         }
         
         protected override void Exit()
         {
             AudioManager.Instance.StopMissileAcquiringSound();
-            airplaneController.FireMissile();
+           
             airplaneController.m_Laser.gameObject.SetActive(false);
         }
     }
     
-
+    #endregion
     public class AirplaneController : MonoBehaviour
     {
         [Header("Structure")]
@@ -192,7 +252,7 @@ namespace HungryWorm
         [SerializeField] private float m_MissileAquiringTime = 2;
         [SerializeField] private GameObject m_MissilePrefab;
         private GameObject m_Missile;
-        [SerializeField] private Transform m_MissileSpawnPoint;
+        [SerializeField] public Transform m_MissileSpawnPoint;
         private bool missileReady = true;
         [SerializeField] public Laser m_Laser;
         [SerializeField] public Transform m_LaserStartPoint;
@@ -220,7 +280,17 @@ namespace HungryWorm
             m_currentState = targetAquiringState;
 
         }
+
+        private void OnEnable()
+        {
+            UIEvents.LeaderboardScreenShown += DestroyThis;
+        }
         
+        private void OnDisable()
+        {
+            UIEvents.LeaderboardScreenShown -= DestroyThis;
+        }
+
         private void FixedUpdate()
         {
             if (m_player == null)
@@ -283,22 +353,21 @@ namespace HungryWorm
         }
 
         
-        public void FireMissile()
+        public void FireMissile(Vector3 target)
         {
-            // Anticipate where the player will be when the missile reaches him
-            Rigidbody2D playerRigidbody = m_player.GetComponent<Rigidbody2D>();
-            float timeToReachPlayer = Vector2.Distance(m_MissileSpawnPoint.position, m_player.transform.position) / (m_MaxSpeed * 2) - 0.2f;
-            Vector3 target = m_player.transform.position + new Vector3(playerRigidbody.velocity.x * timeToReachPlayer, playerRigidbody.velocity.y * timeToReachPlayer, 0);
-            
-            Debug.Log("Firing missile");
             m_Missile.transform.SetParent(null);
-            m_Missile.GetComponent<MissileController>().Fire(target);
+            m_Missile.GetComponent<MissileController>().Fire(target + new Vector3(0,1,0));
             AudioManager.Instance.PlayMissileFiredSound();
         }
         
         public void ChangeState(AirplaneState nextState)
         {
             m_currentState = nextState;
+        }
+
+        private void DestroyThis()
+        {
+            Destroy(gameObject);
         }
     }
     
