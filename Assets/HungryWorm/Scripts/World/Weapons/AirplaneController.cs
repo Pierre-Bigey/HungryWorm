@@ -102,6 +102,11 @@ namespace HungryWorm
             this.m_distanceToFireMissile = mDistanceToFireMissile;
             this.m_timeToFireMissile = mTimeToFireMissile;
         }
+        
+        protected override void Enter()
+        {
+            m_isAquiringTarget = false;
+        }
 
         protected override void Process()
         {
@@ -115,6 +120,7 @@ namespace HungryWorm
             {
                 airplaneController.m_Laser.gameObject.SetActive(false);
                 m_isAquiringTarget = false;
+                AudioManager.Instance.StopMissileAcquiringSound();
             }
         }
 
@@ -143,6 +149,7 @@ namespace HungryWorm
                     {
                         m_isAquiringTarget = true;
                         m_timeSinceAquiringTarget = Time.time;
+                        AudioManager.Instance.PlayMissileAcquiringSound();
                     }
                 }
             }
@@ -150,6 +157,7 @@ namespace HungryWorm
         
         protected override void Exit()
         {
+            AudioManager.Instance.StopMissileAcquiringSound();
             airplaneController.FireMissile();
             airplaneController.m_Laser.gameObject.SetActive(false);
         }
@@ -285,6 +293,7 @@ namespace HungryWorm
             Debug.Log("Firing missile");
             m_Missile.transform.SetParent(null);
             m_Missile.GetComponent<MissileController>().Fire(target);
+            AudioManager.Instance.PlayMissileFiredSound();
         }
         
         public void ChangeState(AirplaneState nextState)

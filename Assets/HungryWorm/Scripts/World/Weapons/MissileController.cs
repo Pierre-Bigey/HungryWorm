@@ -87,6 +87,7 @@ public class MissileController : MonoBehaviour
         m_engineOn = false;
         m_exploded = true;
         
+        AudioManager.Instance.PlayMissileExplosionSound();
         WormEvents.MineExploded?.Invoke(transform.position);
         
         m_ThrustAnimation.SetActive(false);

@@ -26,10 +26,12 @@ namespace HungryWorm
             }
         }
         
-        public void PlayClip(AudioClip clip)
+        public AudioSource PlayClip(AudioClip clip)
         {
             AudioSource source = GetAvailableSource();
-            source.PlayOneShot(clip);
+            source.clip = clip;
+            source.Play();
+            return source;
         }
         
         private AudioSource GetAvailableSource()

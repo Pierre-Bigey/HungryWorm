@@ -229,6 +229,9 @@ MonoBehaviour:
   m_buttonClickClip: {fileID: 8300000, guid: 2fbd7954a41d2164e8738044e1f7450c, type: 3}
   m_explosionClip: {fileID: 8300000, guid: f9eb44b85c96be5429737d4dcadbfa3b, type: 3}
   m_bloodSplatterClip: {fileID: 8300000, guid: 69d95c0785759de409f3bc5055368b0c, type: 3}
+  m_MissileAcquiringClip: {fileID: 8300000, guid: 742504e1413c5f34cbdd5ec013794c00, type: 3}
+  m_MissileFiredClip: {fileID: 8300000, guid: 4229567efec9f3342b4ff46c24184108, type: 3}
+  m_MissileExplosionClip: {fileID: 8300000, guid: 169434caec9596948ae5fa812a5520da, type: 3}
 --- !u!114 &5502413182316679431
 MonoBehaviour:
   m_ObjectHideFlags: 0

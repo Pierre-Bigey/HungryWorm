@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -6,6 +7,8 @@ namespace HungryWorm
 {
     public class AudioManager : MonoBehaviour
     {
+        
+        public static AudioManager Instance { get; private set; }
         
         [Tooltip("AudioMixer for audio")]
         [SerializeField] private AudioMixer m_AudioMixer;
@@ -23,9 +26,24 @@ namespace HungryWorm
         [SerializeField] private AudioClip m_buttonClickClip;
         [SerializeField] private AudioClip m_explosionClip;
         [SerializeField] private AudioClip m_bloodSplatterClip;
+        [SerializeField] private AudioClip m_MissileAcquiringClip;
+        [SerializeField] private AudioClip m_MissileFiredClip;
+        [SerializeField] private AudioClip m_MissileExplosionClip;
         
-        
-        
+        private AudioSource m_MissileAcquiringSource;
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
         private void OnEnable()
         {
             Initialize();
@@ -103,6 +121,30 @@ namespace HungryWorm
         {
             m_AudioSourceManager.PlayClip(m_bloodSplatterClip);
         }
+        
+        #region Missile audio
+        
+        public void PlayMissileAcquiringSound()
+        {
+            m_MissileAcquiringSource = m_AudioSourceManager.PlayClip(m_MissileAcquiringClip);
+        }
+        
+        public void StopMissileAcquiringSound()
+        {
+            m_MissileAcquiringSource.Stop();
+        }
+        
+        public void PlayMissileFiredSound()
+        {
+            m_AudioSourceManager.PlayClip(m_MissileFiredClip);
+        }
+        
+        public void PlayMissileExplosionSound()
+        {
+            m_AudioSourceManager.PlayClip(m_MissileExplosionClip);
+        }
+        
+        #endregion
         
         #region Methods
         
