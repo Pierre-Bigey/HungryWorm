@@ -1514,10 +1514,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -36922047356887050, guid: a1068b3d087895443b63df9e6213cf3c, type: 3}
-      propertyPath: m_MissileReloadTime
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 220364369733788349, guid: a1068b3d087895443b63df9e6213cf3c, type: 3}
       propertyPath: m_Name
       value: Airplane
