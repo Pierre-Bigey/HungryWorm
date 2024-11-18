@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SmokeParticle: {fileID: 5157395776576400981}
   m_ThrustAnimation: {fileID: 5994181609848328783}
-  m_missileDamage: 20
+  m_missileDamage: 30
   force: 4000
 --- !u!1001 &1276032879373270591
 PrefabInstance:

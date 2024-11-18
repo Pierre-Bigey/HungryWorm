@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7e8b759bdc489582bc733a703b7b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_poolSize: 20
+  m_poolSize: 40
   m_trailPrefab: {fileID: 4118058984764664731, guid: 7491df7bd430531458602b9d207715bc, type: 3}
-  m_trailSeparation: 0.5
+  m_trailSeparation: 0.3
   m_ZPosition: 55

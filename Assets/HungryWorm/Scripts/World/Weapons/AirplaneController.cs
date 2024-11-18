@@ -1,4 +1,5 @@
 using System;
+using HungryWorm.Scripts.Food;
 using UnityEngine;
 
 namespace HungryWorm
@@ -11,7 +12,7 @@ namespace HungryWorm
         Exit
     }
 
-    public class AirplaneState 
+    public class AirplaneState
     {
         protected AirplaneState nextState;
         protected AirplaneController airplaneController;
@@ -57,17 +58,18 @@ namespace HungryWorm
         }
     }
     
-    public class AirplaneReloadState : AirplaneState
+    public class AirplaneMissileReloadState : AirplaneState
     {
         private float reloadTime;
         private float timeWhenReloaded;
-        public AirplaneReloadState(AirplaneController airplaneController, float reloadTime) : base(airplaneController)
+        public AirplaneMissileReloadState(AirplaneController airplaneController, float reloadTime) : base(airplaneController)
         {
             this.reloadTime = reloadTime;
         }
 
         protected override void Enter()
         {
+            airplaneController.m_speed = 1.2f * airplaneController.m_MaxSpeed;
             timeWhenReloaded = Time.time;
         }
         
@@ -81,11 +83,12 @@ namespace HungryWorm
         
         protected override void Exit()
         {
+            airplaneController.m_speed = airplaneController.m_MaxSpeed;
             airplaneController.ReloadMissile();
         }
     }
     
-    public class AirplaneTargetAquiringState : AirplaneState
+    public class AirplaneMissileTargetAquiringState : AirplaneState
     {
         private PlayerController m_playerController;
         private GameObject m_player;
@@ -94,7 +97,7 @@ namespace HungryWorm
         private float m_timeSinceAquiringTarget;
         private bool m_isAquiringTarget;
         
-        public AirplaneTargetAquiringState(AirplaneController airplaneController, 
+        public AirplaneMissileTargetAquiringState(AirplaneController airplaneController, 
             PlayerController m_playerController, float mDistanceToFireMissile, float mTimeToFireMissile) : base(airplaneController)
         {
             this.m_playerController = m_playerController;
@@ -114,6 +117,7 @@ namespace HungryWorm
             bool playerInFront = airplaneController.movingRight ? distance < 0 : distance > 0;
             if ( playerInFront && Math.Abs(distance) < m_distanceToFireMissile)
             {
+                //IF player not in dirt, shoot a laser at its head to detect him
                 if (!m_playerController.InDirt)
                 {
                     DetecPlayer();
@@ -135,6 +139,9 @@ namespace HungryWorm
             }
         }
 
+        /// <summary>
+        /// Detect if the player is visible by the plane by sending a raycast to its head position
+        /// </summary>
         private void DetecPlayer()
         {
             //Start Forward Raycast
@@ -155,6 +162,10 @@ namespace HungryWorm
             }
         }
 
+        /// <summary>
+        /// Called when the raycast hit the player, to show the laser and countdown before firing
+        /// </summary>
+        /// <param name="collider"></param>
         private void PointLaser(GameObject collider)
         {
             if (m_isAquiringTarget)
@@ -165,7 +176,7 @@ namespace HungryWorm
                     Rigidbody2D playerRigidbody = m_player.GetComponent<Rigidbody2D>();
                     float timeToReachPlayer = Vector2.Distance(airplaneController.m_MissileSpawnPoint.position, collider.transform.position) / (5 * 2) - 0.2f;
                     Vector3 target = collider.transform.position; //+ new Vector3(playerRigidbody.velocity.x * timeToReachPlayer, playerRigidbody.velocity.y * timeToReachPlayer, 0);
-                    Debug.Log("Firing on : " + collider.name);
+                    //Debug.Log("Firing on : " + collider.name);
                     airplaneController.FireMissile(target);
                     step = Step.Exit;
                 }
@@ -222,9 +233,74 @@ namespace HungryWorm
             airplaneController.m_Laser.gameObject.SetActive(false);
         }
     }
+
+    public class AirplaneBombReloadState : AirplaneState
+    {
+        private float reloadTime;
+        private float timeWhenReloaded;
+
+        public AirplaneBombReloadState(AirplaneController airplaneController, float reloadTime) : base(
+            airplaneController)
+        {
+            this.reloadTime = reloadTime;
+        }
+
+        protected override void Enter()
+        {
+            timeWhenReloaded = Time.time;
+        }
+
+        protected override void Process()
+        {
+            if (Time.time - timeWhenReloaded > reloadTime)
+            {
+                step = Step.Exit;
+            }
+        }
+
+        protected override void Exit()
+        {
+            airplaneController.ReloadBomb();
+        }
+    }
+
+    public class AirplaneBombScanning : AirplaneState
+    {
+        // The angle from the horiontal axis to the ground where to check for player
+        private float m_angle;
+        
+        public AirplaneBombScanning(AirplaneController airplaneController, float angle) : base(airplaneController)
+        {
+            // Angle conversion in radian
+            m_angle = angle * Mathf.Deg2Rad;
+        }
+
+        protected override void Process()
+        {
+            
+            // IF goes to left, Add pi/2 to the angle
+            float angle = m_angle + (airplaneController.movingRight ? 0 : (float) Math.PI / 2 );
+            
+            // Compute direction based on the angle
+            Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(-angle), 0);
+            Ray ray = new Ray(airplaneController.m_BombSpawnPoint.position, direction);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 1000);
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+                {
+                    airplaneController.DropBomb();
+                    step = Step.Exit;
+                }
+            }
+            
+            // Debug the ray
+            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red);
+        }
+    }
     
     #endregion
-    public class AirplaneController : MonoBehaviour
+    public class AirplaneController : Edible
     {
         [Header("Structure")]
         [SerializeField] private GameObject m_AirplaneModel;
@@ -235,15 +311,17 @@ namespace HungryWorm
         [Header("Movement")]
         [SerializeField] private float atlitude = 5.35f;
         [SerializeField] private float m_turnAtDistance = 50f;
-        [SerializeField] private float m_MaxSpeed = 10f;
+        [SerializeField] public float m_MaxSpeed = 10f;
         [HideInInspector] public bool movingRight = true;
+        [HideInInspector] public float m_speed;
+        private bool m_isMoving = true;
         
         [Header("Bomb")]
         [SerializeField] private float m_BombReloadTime = 15;
         [SerializeField] private GameObject m_BombPrefab;
         private GameObject m_Bomb;
-        [SerializeField] private Transform m_BombSpawnPoint;
-        private bool bombReady = true;
+        [SerializeField] public Transform m_BombSpawnPoint;
+        [SerializeField] private float m_BombScanningAngle = 45;
         private float m_timeWhenBombDropped;
         
         [Header("Missile")]
@@ -253,14 +331,14 @@ namespace HungryWorm
         [SerializeField] private GameObject m_MissilePrefab;
         private GameObject m_Missile;
         [SerializeField] public Transform m_MissileSpawnPoint;
-        private bool missileReady = true;
         [SerializeField] public Laser m_Laser;
         [SerializeField] public Transform m_LaserStartPoint;
         [HideInInspector] GameObject m_player;
         private PlayerController m_playerController;
         
         // Finite State Machine
-        private AirplaneState m_currentState;
+        private AirplaneState m_currentMissileState;
+        private AirplaneState m_currentBombState;
         
         private void Start()
         {
@@ -270,14 +348,22 @@ namespace HungryWorm
             m_player = m_playerController.gameObject;
             
             m_Missile = Instantiate(m_MissilePrefab, m_MissileSpawnPoint);
-            m_Bomb = Instantiate(m_BombPrefab, m_BombSpawnPoint);
             
-            AirplaneState reloadState = new AirplaneReloadState(this, m_MissileReloadTime);
-            AirplaneState targetAquiringState = new AirplaneTargetAquiringState(this, m_playerController, m_distanceToFireMissile, m_MissileAquiringTime);
-            reloadState.SetNextState(targetAquiringState);
-            targetAquiringState.SetNextState(reloadState);
+            AirplaneState missileReloadState = new AirplaneMissileReloadState(this, m_MissileReloadTime);
+            AirplaneState missileTargetAquiringState = new AirplaneMissileTargetAquiringState(this, m_playerController, m_distanceToFireMissile, m_MissileAquiringTime);
+            missileReloadState.SetNextState(missileTargetAquiringState);
+            missileTargetAquiringState.SetNextState(missileReloadState);
 
-            m_currentState = targetAquiringState;
+            m_currentMissileState = missileTargetAquiringState;
+            
+            AirplaneState bombReloadState = new AirplaneBombReloadState(this, m_BombReloadTime);
+            AirplaneState bombScanningState = new AirplaneBombScanning(this, m_BombScanningAngle);
+            bombReloadState.SetNextState(bombScanningState);
+            bombScanningState.SetNextState(bombReloadState);
+            
+            m_currentBombState = bombReloadState;
+            
+            m_speed = m_MaxSpeed;
 
         }
 
@@ -297,6 +383,11 @@ namespace HungryWorm
             {
                 Debug.LogError("Player not found in AirplaneController");
             }
+
+            if (!m_isMoving)
+            {
+                return;
+            }
             
             // Move the airplane
             Move();
@@ -310,30 +401,31 @@ namespace HungryWorm
                 Turn();
             }
             
-            m_currentState.Update();
+            m_currentMissileState.Update();
+            m_currentBombState.Update();
         }
 
         public void ReloadMissile()
         {
-            missileReady = true;
             m_Missile = Instantiate(m_MissilePrefab, m_MissileSpawnPoint);
         }
         
         public void ReloadBomb()
         {
-            bombReady = true;
             m_Bomb = Instantiate(m_BombPrefab, m_BombSpawnPoint);
         }
 
         private void Move()
         {
             // Move the airplane
-            m_Rigidbody2D.velocity = new Vector2(movingRight ? m_MaxSpeed : -m_MaxSpeed, 0);
+            m_Rigidbody2D.velocity = new Vector2(movingRight ? m_speed : -m_speed, 0);
         }
 
         private void Turn()
         {
             movingRight = !movingRight;
+            
+            
             
             // Reverse the rotation of the airplane
             transform.rotation = Quaternion.Euler(0, movingRight ? 0 : 180, 0);
@@ -349,7 +441,6 @@ namespace HungryWorm
             // Reverse the position of the ThrustAnimation
             var thrustPosition = m_ThrustAnimation.transform.localPosition;
             m_ThrustAnimation.transform.localPosition = new Vector3(thrustPosition.x, thrustPosition.y, movingRight ? 1 : -1);
-            
         }
 
         
@@ -359,16 +450,55 @@ namespace HungryWorm
             m_Missile.GetComponent<MissileController>().Fire(target + new Vector3(0,1,0));
             AudioManager.Instance.PlayMissileFiredSound();
         }
+
+        public void DropBomb()
+        {
+            m_Bomb.transform.SetParent(null);
+            Vector3 force = new Vector3(movingRight ? 1 : -1, 0, 0);
+            m_Bomb.GetComponent<BombController>().Drop(force);
+        }
         
         public void ChangeState(AirplaneState nextState)
         {
-            m_currentState = nextState;
+            m_currentMissileState = nextState;
+        }
+
+        public void Crash()
+        {
+            m_isMoving = false;
+            m_Rigidbody2D.constraints = RigidbodyConstraints2D.None; 
+            // TODO Add fire animation
+            m_ThrustAnimation.SetActive(false);
+        }
+        
+        public void Explose()
+        {
+            m_isMoving = false;
+            GetComponent<EdgeCollider2D>().enabled = false;
+            m_Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll; 
+            // TODO Add explosion animation
+            
         }
 
         private void DestroyThis()
         {
             Destroy(gameObject);
         }
+
+        public override void Kill()
+        {
+            Crash();
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            base.OnTriggerEnter2D(other);
+            //CHeck if hit the dirt
+            if (other.gameObject.layer == LayerMask.NameToLayer("Dirt"))
+            {
+                Explose();
+            }
+        }   
+        
     }
-    
 }

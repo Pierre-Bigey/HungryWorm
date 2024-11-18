@@ -15,27 +15,27 @@ namespace HungryWorm.Scripts.Food
         /// Check if collide with the player, if yes trigger the events and destroy the object.
         /// </summary>
         /// <param name="other"></param>
-        private void OnTriggerEnter2D(Collider2D other)
+        protected void OnTriggerEnter2D(Collider2D other)
         {
             // Debug.Log("Edible triggered with " + other.gameObject.name);
             //Check the layer
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (other.gameObject.CompareTag("Player"))
             {
                 Eat();
                 Kill();
             }
         }
 
-        private void Eat()
+        public void Eat()
         {
             WormEvents.EnemyEaten?.Invoke(m_foodValue);
             GameEvents.ScoreUpdated?.Invoke(m_scoreValue);
         }
 
         /// <summary>
-        /// Called when eaten by the player.
+        /// Called when get Killed
         /// </summary>
-        private void Kill()
+        public virtual void Kill()
         {
             gameObject.SetActive(false);
             WormEvents.BloodSplatter?.Invoke(transform.position);

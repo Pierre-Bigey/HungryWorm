@@ -72,7 +72,7 @@ EdgeCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -90,10 +90,10 @@ EdgeCollider2D:
   - {x: 1.2919117, y: -0.08030279}
   - {x: 1.8806003, y: -0.25799903}
   - {x: 1.5588534, y: -0.36719126}
-  - {x: 0.8964486, y: -0.47143197}
-  - {x: 0.68404275, y: -0.5370517}
-  - {x: -0.31415296, y: -0.53484905}
-  - {x: -0.6951457, y: -0.3919393}
+  - {x: 0.92178285, y: -0.3626436}
+  - {x: 0.6676517, y: -0.36139664}
+  - {x: 0.3966807, y: -0.43019477}
+  - {x: -0.697864, y: -0.42319968}
   - {x: -1.1163082, y: -0.39514738}
   - {x: -1.4293946, y: -0.32049376}
   - {x: -1.867031, y: -0.2857743}
@@ -116,10 +116,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 500
   m_LinearDrag: 0.5
   m_AngularDrag: 2
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -143,6 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024a0246608d52546a4cea4bcd8f48d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_foodValue: 15
+  m_scoreValue: 150
   m_AirplaneModel: {fileID: 1111373919715399851}
   m_SmokeParticle: {fileID: 4663611180107860189}
   m_ThrustAnimation: {fileID: 9060551465175720126}
@@ -150,9 +152,11 @@ MonoBehaviour:
   m_turnAtDistance: 50
   m_MaxSpeed: 10
   movingRight: 1
-  m_BombReloadTime: 15
+  m_speed: 0
+  m_BombReloadTime: 8
   m_BombPrefab: {fileID: 7867566033441039124, guid: 2f7b1e874d07fef47911ce30dfdc3b62, type: 3}
   m_BombSpawnPoint: {fileID: 2265227127759881839}
+  m_BombScanningAngle: 45
   m_distanceToFireMissile: 30
   m_MissileReloadTime: 5
   m_MissileAquiringTime: 1.5
@@ -369,7 +373,7 @@ Transform:
   m_GameObject: {fileID: 4300413885109929583}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.244, y: -0.44, z: 1}
+  m_LocalPosition: {x: 0.244, y: -0.444, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

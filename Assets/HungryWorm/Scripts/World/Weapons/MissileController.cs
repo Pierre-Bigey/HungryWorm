@@ -63,8 +63,8 @@ public class MissileController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Missile hit: " + other.name);
-        if (m_exploded)
+        // Debug.Log("Missile hit: " + other.name);
+        if (m_exploded || !m_engineOn)
         {
             return;
         }
@@ -82,7 +82,7 @@ public class MissileController : MonoBehaviour
 
     private void Explose()
     {
-        Debug.Log("Missile exploded");
+        // Debug.Log("Missile exploded");
         
         m_engineOn = false;
         m_exploded = true;
