@@ -39,7 +39,7 @@ namespace HungryWorm
         private void WormEvents_OnWormDied()
         {
             GameEvents.GameEnded?.Invoke();
-            UIEvents.EndScreenShown?.Invoke();
+            
         }
 
     }

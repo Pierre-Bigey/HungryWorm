@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using HungryWorm;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -193,6 +194,7 @@ public class PlayerController : MonoBehaviour
 
         if (m_health <= 0)
         {
+            Debug.Log("Worm died");
             Die();
         }
     
@@ -200,9 +202,17 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        //TODO make an animation or something
-        // Debug.Log("Player died");
+        m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+        GetComponent<Collider2D>().enabled = false;
         WormEvents.WormDied?.Invoke();
+        StartCoroutine(DieAnimation());
+    }
+
+    private IEnumerator DieAnimation()
+    {
+        
+        yield return new WaitForSeconds(2f);
+        UIEvents.EndScreenShown?.Invoke();
     }
     
     private void GameEvents_EnemyEaten(float amount)
